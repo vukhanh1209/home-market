@@ -1,10 +1,13 @@
-import Header from './component/User/Header'
 import './App.css'
+import MainLayout from './layout/MainLayout'
+
 
 function App() {
     return (
-        <Header/>
-      )
+      <>
+        <MainLayout/>
+      </>
+    )
 }
 
 export default App

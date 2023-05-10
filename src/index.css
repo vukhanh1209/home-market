@@ -13,8 +13,67 @@
   }
   
   body {
-    font-family:'Montserrat', sans-serif;
-    font-weight: 400;
+    /* font-family:'Montserrat', sans-serif;
+     */
+     font-family: 'Quicksand', sans-serif;
+    /* font-weight: 400; */
     color: white;
+    background-color: #F6F4F2;
+    /*
+    primary-light: #F6F4F2;
+    primary-dark: #EDEAE7;
+    red-light: #F4E5E3
+    red-dark: #e45959;
+    green-light: #E4E7E6;
+    green-dark: #4C7C7D
+    text: #383634
+    */
   }
 
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {  
+  
+     opacity: 1;
+  
+  }
+
+  @layer components {
+    .text-primary {
+      @apply text-[#383634]
+    }
+
+    .text-red--dark {
+      @apply text-[#e45959]
+    }
+
+    .text-green--dark {
+      @apply text-[#4C7C7D]
+    }
+
+    .bg-primary {
+      @apply bg-[#F6F4F2]
+    }
+
+    .bg-primary--dark {
+      @apply bg-[#EDEAE7]
+    }
+
+    .bg-red--light {
+      @apply bg-[#F4E5E3]
+    }
+
+    .bg-green--light {
+      @apply bg-[#E4E7E6]
+    }
+
+    .bg-green--dark {
+      @apply bg-[#4C7C7D]
+    }
+
+    .border-primary {
+      @apply border-[#E8E5E2]
+    }
+    .border-green {
+      @apply border-[#4C7C7D]
+    }
+  }
