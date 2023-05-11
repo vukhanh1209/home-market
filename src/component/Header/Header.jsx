@@ -10,7 +10,7 @@ const Header = () => {
     return (
         <Fragment>
             <div className={"fixed w-full z-50 bg-[#F6F4F2] top-0"} id="Header">
-                <div className='flex items-center justify-between w-full h-[5rem] px-36 border-b border-[#e6e6e6] '>
+                <div className='flex items-center justify-between w-full h-[5rem] px-24 border-b border-[#e6e6e6] '>
                     <div className="flex items-center gap-x-5">
                         <div>
                             <a className={`text-2xl font-bold text-center text-[#383634]`} href=''>

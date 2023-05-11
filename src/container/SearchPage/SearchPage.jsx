@@ -23,13 +23,13 @@ const SearchPage = () => {
     const sortbyFilter = ['Giá tăng dần', 'Giá giảm dần', 'Phổ biến']
     return (
         <>
-            <div className=" mx-10 mt-[7.5rem] mb-10 bg-[#F6F4F2]  h-fit rounded-[2rem] grid grid-cols-4">
+            <div className="px-24  mt-[7.5rem] mb-10 bg-[#F6F4F2]  h-fit grid grid-cols-5">
                 
                 <SelectedTagContext.Provider value={selectedTag}>
                     <CategoryFilter setSelectedTag={setSelectedTag}/>
                 </SelectedTagContext.Provider>
 
-                <div className="flex flex-wrap gap-y-5 col-span-3 p-10">
+                <div className="flex flex-wrap gap-y-5 col-span-4 py-10 pl-10">
                     <h1 className="text-xl font-bold text-[#383634] px-2 ">Sản phẩm</h1>
 
                     <div className="w-full flex justify-between items-center">
