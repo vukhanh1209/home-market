@@ -4,6 +4,7 @@ import Footer from "../../component/Footer";
 import HomePage from "../../container/HomePage";
 import SearchPage from "../../container/SearchPage";
 import CartPage from "../../container/CartPage";
+import PlaceOrderPage from "../../container/PlaceOrderPage";
 
 const MainLayout = () => {
     return (
@@ -11,7 +12,8 @@ const MainLayout = () => {
             <Header/>
             {/* <HomePage/> */}
             {/* <SearchPage/> */}
-            <CartPage/>
+            {/* <CartPage/> */}
+            <PlaceOrderPage/>
             <Footer/>
         </Fragment>
     )

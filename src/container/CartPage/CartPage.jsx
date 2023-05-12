@@ -4,7 +4,7 @@ import ProductItem from "./ProductItem";
 const CartPage = () => {
     return (
         <div className="w-full h-fit bg-primary--dark px-24 py-28">
-            <h1 className="text-xl font-bold text-[#383634] py-5">Giỏ hàng</h1>
+            <h1 className="text-3xl font-bold text-[#383634] py-5">Giỏ hàng</h1>
             <div className="grid grid-cols-5 w-full mb-10  h-full gap-8 ">
                 <div className="flex flex-col col-span-4 px-10  bg-primary rounded-3xl">
                     <div className="flex justify-between items-center w-full py-5 border-b-2 border-primary">
@@ -27,8 +27,10 @@ const CartPage = () => {
                     <ProductItem/>
 
                 </div>
-                <div className="col-span-1 bg-primary rounded-3xl">
-
+                <div className="sticky top-[100px] flex flex-col gap-y-3 col-span-1 bg-primary rounded-3xl text-primary p-5 h-fit">
+                    <span className="text-xs font-medium ">{`Tổng cộng ${10} sản phẩm`}</span>
+                    <span className="text-xl font-bold">{`${`$320.000`}`}</span>
+                    <button className="font-bold bg-green--dark text-white text-sm px-5 py-2 rounded-lg hover:opacity-90">Mua hàng</button>
                 </div>
             </div>
         </div>
