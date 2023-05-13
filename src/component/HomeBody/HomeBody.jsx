@@ -246,16 +246,16 @@ const HomeBody = () => {
 
                     </div>
 
-                    <div className="relative w-full h-full bg-">
-                        <img className="object-cover h-full" src={banner3} alt="" />
+                    <div className="relative w-full h-full rounded-3xl overflow-hidden">
+                       
+                        <img className="object-cover h-full rounded-lg overflow-hidden" src={banner3} alt="" />
                         <div className="absolute w-full h-full bg-[#383634] top-0 opacity-50">
-
                         </div>
 
                         <div className="absolute flex items-center top-0 w-full h-full">
                             <div className="px-6 w-[50%] ">
                                 <h1 className="text-white font-bold text-3xl leading-normal ">Want To Know More Us?</h1>
-                                <a href="" className="inline-block  px-5 py-2 rounded-lg mt-4 bg-[#6CAF7A] hover:bg-[#93d037] text-base font-bold text-white">Click here</a>
+                                <a href="" className="inline-block  px-5 py-2 rounded-lg mt-4 bg-green--dark hover:bg-green--hover text-base font-bold text-white">Click here</a>
                             </div>
                         </div>
                     </div>

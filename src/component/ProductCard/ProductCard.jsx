@@ -63,12 +63,11 @@ const ProductCard = () => {
 
                     </div>
 
-                    <div className="flex flex-col">
-                        <NumberInput/>
-                        <button className="flex items-center justify-between bg-white border border-primary text-[#383634] text-sm font-bold px-5 py-2 my-2 rounded-lg w-full  hover:bg-[#4C7C7D] hover:text-white transition-all">
-                            <span className="my-auto font-bold">Add</span>         
-                            {/* <FontAwesomeIcon icon={faCartShopping} className="h-4 w-4 ml-2" /> */}
-                            <RiAddFill className="w-5 h-5 "/>
+                    <div className="flex flex-col items-end">
+                        <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" border="#E8E5E2"/>
+                        <button className="flex items-center justify-center bg-white border border-primary text-[#383634] text-sm font-bold px-3 py-2 my-2 rounded-lg w-full  hover:bg-[#4C7C7D] hover:text-white transition-all">
+                            <span className="my-auto font-bold">Giỏ</span>         
+                            <RiAddFill className="ml-2 mr-[-4px] w-5 h-5 "/>
 
                         </button>
                     </div>

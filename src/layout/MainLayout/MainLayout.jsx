@@ -10,10 +10,10 @@ const MainLayout = () => {
     return (
         <Fragment>
             <Header/>
-            {/* <HomePage/> */}
+            <HomePage/>
             {/* <SearchPage/> */}
             {/* <CartPage/> */}
-            <PlaceOrderPage/>
+            {/* <PlaceOrderPage/> */}
             <Footer/>
         </Fragment>
     )

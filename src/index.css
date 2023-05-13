@@ -70,6 +70,10 @@
       @apply bg-[#4C7C7D]
     }
 
+    .bg-green--hover {
+      @apply bg-[#5c8f90]
+    }
+
     .border-primary {
       @apply border-[#E8E5E2]
     }
