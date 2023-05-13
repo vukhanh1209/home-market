@@ -5,7 +5,7 @@ import Payment from './Payment'
 const PlaceOrderPage = () => {
     return (
         <>
-        <div className="w-full h-fit px-24 py-28 bg-primary text-primary">
+        <div className="w-full h-fit px-24 py-28 bg-primary text-primary max-w-[90rem] mx-auto">
             <h1 className="text-3xl font-bold text-[#383634] py-5">Đặt hàng</h1>
             
             <div className="flex w-full mb-10 h-full gap-8 ">

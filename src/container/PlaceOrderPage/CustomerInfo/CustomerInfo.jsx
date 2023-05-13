@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 const info = {
     firstName: 'Khánh',
     lastName: 'Nguyễn',
@@ -7,11 +7,38 @@ const info = {
 }
 
 const CustomerInfo = () => {
+    const [lastName, setLastName] = useState(info.lastName)
+    const [firstName, setFirstName] = useState(info.firstName)
+    const [phone, setPhone] = useState(info.phone)
+    const [address, setAddress] = useState(info.address)
+
+
     const [isEditing, setIsEditing] = useState(false);
-    const {firstName, lastName, phone, address} = info;
 
     const handleSaveCustomerInfo = () => {
+        setIsEditing(false);
+    }
 
+    const handleCancelEdting = () => {
+        setLastName(info.lastName);
+        setFirstName(info.firstName);
+        setPhone(info.phone);
+        setAddress(info.address);
+        setIsEditing(false);
+    }
+
+    const handleLastNameChange = (event) => {
+        setLastName(event.target.value);
+    }
+    const handleFirstNameChange = (event) => {
+        setFirstName(event.target.value);
+    }
+
+    const handlePhoneChange = (event) => {
+        setPhone(event.target.value);
+    }
+    const handleAddressChange = (event) => {
+        setAddress(event.target.value);
     }
     
     return (
@@ -29,7 +56,7 @@ const CustomerInfo = () => {
                                     Xác nhận
                                 </button>
                                 <button 
-                                    onClick={() => setIsEditing(!isEditing)} 
+                                    onClick={() => handleCancelEdting()} 
                                     className="text-primary bg-transparent border-2 border-primary hover:bg-primary--dark rounded-xl font-semibold text-xs px-4 py-2.5 text-center"
                                 >
                                     Hủy
@@ -49,27 +76,27 @@ const CustomerInfo = () => {
             {
                 isEditing ? (
                     <div className="flex justify-between"> 
-                        <div classname="">
+                        <div className="">
                             <div className="flex flex-col gap-y-1 text-sm  font-semibold w-96 mb-4">
-                                <label forHtml="CustomerLastNameInput" className="opacity-80">Họ</label>
-                                <input type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={lastName} id="CustomerLastNameInput"/>
+                                <label forhtml="CustomerLastNameInput" className="opacity-80">Họ</label>
+                                <input  onChange={handleLastNameChange} type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={lastName} id="CustomerLastNameInput"/>
                             </div>
                             
                             <div className="flex flex-col gap-y-1 text-sm  font-semibold w-96">
-                                <label forHtml="CustomerAddressInput" className="opacity-80">Địa chỉ</label>
-                                <input type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={address} id="CustomerAddressInput"/>
+                                <label forhtml="CustomerAddressInput" className="opacity-80">Địa chỉ</label>
+                                <input  onChange={handleAddressChange} type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={address} id="CustomerAddressInput"/>
                             </div>
                         </div>
 
-                        <div classname="">
+                        <div className="">
                             <div className="flex flex-col gap-y-1 text-sm  font-semibold w-96 mb-4">
-                                <label forHtml="CustomerFirstNameInput" className="opacity-80">Tên</label>
-                                <input type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={firstName} id="CustomerFirstNameInput"/>
+                                <label forhtml="CustomerFirstNameInput" className="opacity-80">Tên</label>
+                                <input onChange={handleFirstNameChange} type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={firstName} id="CustomerFirstNameInput"/>
                                 
                             </div>
                             <div className="flex flex-col gap-y-1 text-sm  font-semibold w-96">
-                                <label forHtml="CustomerPhoneInput" className="opacity-80">Số điện thoại</label>
-                                <input type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={phone} id="CustomerPhoneInput"/>
+                                <label forhtml="CustomerPhoneInput" className="opacity-80">Số điện thoại</label>
+                                <input  onChange={handlePhoneChange} type="text" className="px-3 py-1 text-base font-medium rounded-lg outline-none" value={phone} id="CustomerPhoneInput"/>
                                 
                             </div>
 
