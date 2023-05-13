@@ -62,6 +62,10 @@
       @apply bg-[#F4E5E3]
     }
 
+    .bg-red--dark {
+      @apply bg-[#e45959]
+    }
+
     .bg-green--light {
       @apply bg-[#E4E7E6]
     }
