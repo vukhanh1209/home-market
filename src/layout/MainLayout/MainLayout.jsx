@@ -6,16 +6,25 @@ import SearchPage from "../../container/SearchPage";
 import CartPage from "../../container/CartPage";
 import PlaceOrderPage from "../../container/PlaceOrderPage";
 import UserPage from "../../container/UserPage";
+import { Routes, Route } from "react-router-dom";
 
 const MainLayout = () => {
     return (
         <Fragment>
             <Header/>
+            <Routes>
+                <Route path='/home' element={<HomePage/>}/>
+                <Route path='search' element={<SearchPage/>}/>
+                <Route path='cart' element={<CartPage/>}/>
+                <Route path='place-order' element={<PlaceOrderPage/>}/>
+            </Routes>
+
+
             {/* <HomePage/> */}
             {/* <SearchPage/> */}
             {/* <CartPage/> */}
             {/* <PlaceOrderPage/> */}
-            <UserPage/>
+            {/* <UserPage/> */}
             <Footer/>
         </Fragment>
     )

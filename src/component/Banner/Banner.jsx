@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper";
-
+import { Link } from "react-router-dom";
 const Banner = () => {
     return (
         <Swiper
@@ -33,7 +33,7 @@ const Banner = () => {
                             supply fresh food <br></br>
                             for you anytime
                         </h1>
-                        <a href="" className="inline-block  px-6 py-4 rounded-2xl mt-8 bg-green--dark hover:bg-green--hover hover:-translate-y-1 text-5xl font-bold text-white">Shop Now</a>
+                        <Link to="/search" className="inline-block  px-6 py-4 rounded-2xl mt-8 bg-green--dark hover:bg-green--hover hover:-translate-y-1 text-5xl font-bold text-white">Shop Now</Link>
                     </div>
                 </div>
             </SwiperSlide>
@@ -48,26 +48,11 @@ const Banner = () => {
                             Fresh fruit <br></br>
                             & vegetable 
                         </h1>
-                        <a href="" className="inline-block mt-5 px-6 py-4 rounded-2xl bg-green--dark hover:bg-green--hover hover:-translate-y-1 text-4xl font-bold text-white">Shop Now</a>
+                        <Link to="/search" className="inline-block mt-5 px-6 py-4 rounded-2xl bg-green--dark hover:bg-green--hover hover:-translate-y-1 text-4xl font-bold text-white">Shop Now</Link>
 
                     </div>
                 </div>
             </SwiperSlide>
-            {/* <SwiperSlide>
-                <div className="relative">
-                    <a href="">
-                        <img src="https://cdn.shopify.com/s/files/1/0412/8151/9765/files/slider3_7f623fd1-a932-4b5c-92c7-292044869712.jpg?v=1624439470" alt="" />
-                        <img src="https://cdn.shopify.com/s/files/1/0412/8151/9765/files/mobileslider-3.jpg?v=1658921909" alt="" />
-                    </a>
-                    <div className="text-center absolute top-[40%] w-full h-full">
-                        <h1 className="text-5xl text-center font-bold text-black">                        
-                            Fresh for your health
-                        </h1>
-                        <a href="" className="inline-block px-6 py-4 rounded-2xl mt-5 bg-green--dark hover:bg-green--hover hover:-translate-y-1 text-2xl font-bold text-white">Shop Now</a>
-
-                    </div>
-                </div>
-            </SwiperSlide> */}
         </Swiper>
     )
 }

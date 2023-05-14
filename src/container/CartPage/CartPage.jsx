@@ -1,5 +1,5 @@
 import ProductItem from "./ProductItem";
-
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
     return (
@@ -30,7 +30,9 @@ const CartPage = () => {
                 <div className="sticky top-[100px] flex flex-col gap-y-3 col-span-1 bg-primary rounded-3xl text-primary p-5 h-fit">
                     <span className="text-xs font-medium ">{`Tổng cộng ${10} sản phẩm`}</span>
                     <span className="text-xl font-bold">{`${`$320.000`}`}</span>
-                    <button className="font-bold bg-green--dark text-white text-sm px-5 py-2 rounded-lg hover:opacity-90">Mua hàng</button>
+                    <Link to='/place-order' className="flex">
+                        <button className="font-bold flex-1 bg-green--dark text-white text-sm px-5 py-2 rounded-lg hover:opacity-90">Mua hàng</button>
+                    </Link>
                 </div>
             </div>
         </div>

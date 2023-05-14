@@ -2,7 +2,7 @@ import { Fragment} from "react";
 import {FiUser, FiShoppingBag} from 'react-icons/fi'
 import {CgMenuGridO} from 'react-icons/cg'
 import {BiChevronDown} from 'react-icons/bi'
-
+import { Link } from "react-router-dom";
 
 
 
@@ -13,9 +13,11 @@ const Header = () => {
                 <div className='flex items-center justify-between w-full h-[5rem] px-24 border-b border-[#e6e6e6] '>
                     <div className="flex items-center gap-x-5">
                         <div>
-                            <a className={`text-2xl font-bold text-center text-[#383634]`} href=''>
-                                <p>HomeMarket</p>
-                            </a>
+                            <Link to='/home'>
+                                <div className={`text-2xl font-bold text-center text-[#383634]`} href=''>
+                                    <p>HomeMarket</p>
+                                </div>
+                            </Link>
                         </div>
 
 
@@ -107,10 +109,12 @@ const Header = () => {
                             </a>
                         </div>
 
-                        <button className="relative h-10 flex gap-x-2 items-center justify-center rounded-lg text-[#383634] font-bold px-4  text-sm hover:bg-[#EDEAE7] bg-white" >
-                            <FiShoppingBag className="text-2xl"/>
-                            <span className="whitespace-nowrap">{`Giỏ hàng: ${10}`}</span>
-                        </button>
+                        <Link to='/cart'>
+                            <button className="relative h-10 flex gap-x-2 items-center justify-center rounded-lg text-[#383634] font-bold px-4  text-sm hover:bg-[#EDEAE7] bg-white" >
+                                <FiShoppingBag className="text-2xl"/>
+                                <span className="whitespace-nowrap">{`Giỏ hàng: ${10}`}</span>
+                            </button>
+                        </Link>
 
                     </div>
                 </div>

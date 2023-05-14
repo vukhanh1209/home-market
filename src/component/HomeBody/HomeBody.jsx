@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import ProductCard  from "../ProductCard";
@@ -255,7 +256,7 @@ const HomeBody = () => {
                         <div className="absolute flex items-center top-0 w-full h-full">
                             <div className="px-6 w-[50%] ">
                                 <h1 className="text-white font-bold text-3xl leading-normal ">Want To Know More Us?</h1>
-                                <a href="" className="inline-block  px-5 py-2 rounded-lg mt-4 bg-green--dark hover:bg-green--hover text-base font-bold text-white">Click here</a>
+                                <Link to="/search" className="inline-block  px-5 py-2 rounded-lg mt-4 bg-green--dark hover:bg-green--hover text-base font-bold text-white">Click here</Link>
                             </div>
                         </div>
                     </div>
