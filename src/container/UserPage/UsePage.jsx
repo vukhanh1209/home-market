@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import avatar from '../../assets/avatar.jpg'
 import {IoMailOutline} from 'react-icons/io5'
 import {HiOutlineUserCircle} from 'react-icons/hi2'
@@ -6,6 +6,7 @@ import {TfiReceipt} from 'react-icons/tfi'
 import ManageAccount from './ManageAccount'
 import MyPayment from './MyPayment'
 import MyOrder from './MyOrder'
+import { useLocation, Link, Outlet } from 'react-router-dom'
 
 
 const info = {
@@ -17,8 +18,11 @@ const info = {
 }
 
 const UserPage = () => {
-    const [category, setCategory] = useState('ManageAccount');
-
+    const location = useLocation();
+    const [category, setCategory] = useState(location.pathname);
+    useEffect(() =>{
+        setCategory(location.pathname);
+    }, [location.pathname])
 
     return (
         <div className="w-full h-fit bg-primary--dark  px-24 py-28">
@@ -29,30 +33,32 @@ const UserPage = () => {
                         <span className="font-semibold text-base mt-3">{`${info.firstName} ${info.lastName}`}</span>
                     </div>
                     <div className="flex flex-col pt-3 ">
-                        <a 
-                        onClick={() => setCategory('ManageAccount')} 
-                        className={`${category == "ManageAccount" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}
+                        <Link 
+                        to="account"
+                        onClick={() => setCategory('/account')} 
+                        className={`${category == "/account" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}
                         >
                             <HiOutlineUserCircle className="w-6 h-6"/>
                             <span className="text-base font-medium cursor-pointer">Quản lý tài khoản</span>
-                        </a>
-                        <a 
-                        onClick={() => setCategory('MyOrder')} 
-                        className={`${category == "MyOrder" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
+                        </Link>
+                        <Link 
+                        to="order"
+                        onClick={() => setCategory('/order')} 
+                        className={`${category == "/order" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
                             <IoMailOutline className="w-6 h-6"/>
                             <span className="text-base font-medium cursor-pointer">Đơn hàng của tôi</span>
-                        </a>
-                        <a 
-                        onClick={() => setCategory('MyPayment')} 
-                        className={`${category == "MyPayment" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
+                        </Link>
+                        <Link 
+                        to="payment"
+                        onClick={() => setCategory('/payment')} 
+                        className={`${category == "/payment" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
                             <TfiReceipt className="w-6 h-6"/>
                             <span className="text-base font-medium cursor-pointer">Đơn mua của tôi</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
-
-
-                {
+                <Outlet/>
+                {/* {
                     category == "ManageAccount" &&  <ManageAccount/>
                 } 
                 {
@@ -60,7 +66,7 @@ const UserPage = () => {
                 } 
                 {
                     category == "MyPayment" &&  <MyPayment/>
-                } 
+                }  */}
                 
             </div>
         </div>

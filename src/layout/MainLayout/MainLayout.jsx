@@ -6,6 +6,10 @@ import SearchPage from "../../container/SearchPage";
 import CartPage from "../../container/CartPage";
 import PlaceOrderPage from "../../container/PlaceOrderPage";
 import UserPage from "../../container/UserPage";
+import ManageAccount from "../../container/UserPage/ManageAccount";
+import MyOrder from "../../container/UserPage/MyOrder";
+import MyPayment from "../../container/UserPage/MyPayment";
+
 import { Routes, Route } from "react-router-dom";
 
 const MainLayout = () => {
@@ -13,10 +17,16 @@ const MainLayout = () => {
         <Fragment>
             <Header/>
             <Routes>
-                <Route path='/home' element={<HomePage/>}/>
-                <Route path='search' element={<SearchPage/>}/>
-                <Route path='cart' element={<CartPage/>}/>
-                <Route path='place-order' element={<PlaceOrderPage/>}/>
+                <Route path='/' element={<HomePage/>}/>
+                <Route path='/search' element={<SearchPage/>}/>
+                <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/place-order' element={<PlaceOrderPage/>}/>
+                <Route path='/' element={<UserPage/>}> 
+                    <Route path='account' element={<ManageAccount />} />
+                    <Route path='order' element={<MyOrder />} />
+                    <Route path='payment' element={<MyPayment />} />
+                </Route>
+
             </Routes>
 
 

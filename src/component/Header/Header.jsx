@@ -1,21 +1,23 @@
-import { Fragment} from "react";
+import { Fragment,useState} from "react";
 import {FiUser, FiShoppingBag} from 'react-icons/fi'
 import {CgMenuGridO} from 'react-icons/cg'
 import {BiChevronDown} from 'react-icons/bi'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {IoMailOutline} from 'react-icons/io5'
 import {HiOutlineUserCircle} from 'react-icons/hi2'
 import {TfiReceipt} from 'react-icons/tfi'
 
 const Header = () => {
+    const navigate = useNavigate()
+    const [loggedIn, setLoggedIn] = useState(true);
     return (
         <Fragment>
             <div className={"fixed w-full z-50 bg-[#F6F4F2] top-0"} id="Header">
                 <div className='flex items-center justify-between w-full h-[5rem] px-24 border-b border-[#e6e6e6] '>
                     <div className="flex items-center gap-x-5">
                         <div>
-                            <Link to='/home'>
-                                <div className={`text-2xl font-bold text-center text-[#383634]`} href=''>
+                            <Link to='/'>
+                                <div className={`text-2xl font-bold text-center text-[#383634]`}>
                                     <p>HomeMarket</p>
                                 </div>
                             </Link>
@@ -48,7 +50,6 @@ const Header = () => {
                                     <div className="group-hover:inline-block hidden text-left mt-16" id="ProductDropdown">
                                         <div className="absolute left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-[#383634] ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                             <div className="py-1" role="none">
-
                                                 <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Edit</li>
                                                 <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Duplicate</li>
                                             </div>
@@ -74,53 +75,68 @@ const Header = () => {
                     
 
                     <div className="flex items-center justify-center z-10">
-                        {/* <button className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</button>
-                        <button className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</button> */}
+                        {
+                            loggedIn ? (
+                                <>
+                                    <div className="group relative hover:cursor-pointer mr-10">
+                                        <div className="relative group flex items-center h-full mx-4 rounded-xl hover:text-[#4C7C7D] ">
+                                            <div className="flex justify-center items-center gap-x-2">
+                                                <FiUser className="text-2xl text-[#383634]"/>
+                                                <span className="text-sm text-slate-600 font-bold whitespace-nowrap">Khanh Nguyen</span>
+                                                <BiChevronDown className="text-lg text-[#383634]"/>
+                                            </div>
 
-                        <div className="group relative hover:cursor-pointer mr-10">
-                            <a href="" className="relative group flex items-center h-full mx-4 rounded-xl hover:text-[#4C7C7D] ">
-                                <div className="flex justify-center items-center gap-x-2">
-                                    <FiUser className="text-2xl text-[#383634]"/>
-                                    <span className="text-sm text-slate-600 font-bold whitespace-nowrap">Geralt</span>
-                                    <BiChevronDown className="text-lg text-[#383634]"/>
-                                </div>
+                                            <div className="absolute w-full h-8 bg-transparent top-[100%]"></div>
 
-                                <div className="absolute w-full h-8 bg-transparent top-[100%]"></div>
+                                            
+                            
+                                            <div className="group-hover:inline-block hidden text-left mt-16 " id="ProductDropdown">
+                                                
+                                                <div className="absolute right-0 z-10 mt-2 w-fit origin-top-right divide-y divide-gray-100 rounded-xl bg-white shadow-lg ring-1 ring-[#383634] ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                                    <div className="py-2 font-medium " role="none">
+                                                        <Link to="account" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-0">
+                                                            <HiOutlineUserCircle className="h-6 w-6"/>
+                                                            <span> Quản lý tài khoản</span>
+                                                        </Link>
+                                                        <Link to="order" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
+                                                            <IoMailOutline className="h-6 w-6"/>
+                                                            <span>Đơn hàng của tôi</span>
+                                                        </Link>
+                                                        <Link to="payment" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
+                                                            <TfiReceipt className="h-6 w-6"/>
+                                                            <span>Đơn mua của tôi</span>
+                                                        </Link>
 
-                                
-                
-                                <div className="group-hover:inline-block hidden text-left mt-16 " id="ProductDropdown">
-                                    
-                                    <div className="absolute right-0 z-10 mt-2 w-fit origin-top-right divide-y divide-gray-100 rounded-xl bg-white shadow-lg ring-1 ring-[#383634] ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                        <div className="py-2 font-medium " role="none">
-                                            <li href="#" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-0">
-                                                <HiOutlineUserCircle className="h-6 w-6"/>
-                                                <span> Quản lý tài khoản</span>
-                                            </li>
-                                            <li href="#" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
-                                                <IoMailOutline className="h-6 w-6"/>
-                                                <span>Đơn hàng của tôi</span>
-                                            </li>
-                                            <li href="#" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
-                                                <TfiReceipt className="h-6 w-6"/>
-                                                <span>Đơn mua của tôi</span>
-                                            </li>
-
-                                        </div>
-                                        <div className="py-1 hover:bg-primary--dark rounded-b-xl" role="none">
-                                            <li href="#" className="font-medium text-primary block px-4 py-2 text-sm whitespace-nowrap  text-center" role="menuitem" tabIndex="-1" id="menu-item-6">Đăng xuất</li>
+                                                    </div>
+                                                    <div className="py-1 hover:bg-primary--dark rounded-b-xl" role="none">
+                                                        <li onClick={() => {
+                                                            setLoggedIn(false)
+                                                            navigate('/') 
+                                                            }} 
+                                                            className="font-medium text-primary block px-4 py-2 text-sm whitespace-nowrap  text-center" role="menuitem" tabIndex="-1" id="menu-item-6">
+                                                            Đăng xuất
+                                                        </li>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
 
-                        <Link to='/cart'>
-                            <button className="relative h-10 flex gap-x-2 items-center justify-center rounded-lg text-[#383634] font-bold px-4  text-sm hover:bg-[#EDEAE7] bg-white" >
-                                <FiShoppingBag className="text-2xl"/>
-                                <span className="whitespace-nowrap">{`Giỏ hàng: ${10}`}</span>
-                            </button>
-                        </Link>
+                                    <Link to='/cart'>
+                                        <button className="relative h-10 flex gap-x-2 items-center justify-center rounded-lg text-[#383634] font-bold px-4  text-sm hover:bg-[#EDEAE7] bg-white" >
+                                            <FiShoppingBag className="text-2xl"/>
+                                            <span className="whitespace-nowrap">{`Giỏ hàng: ${10}`}</span>
+                                        </button>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <button className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</button>
+                                    <button className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</button>
+                                </>
+                            )
+                        }
+                        
 
                     </div>
                 </div>
