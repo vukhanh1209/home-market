@@ -1,8 +1,12 @@
 import ProductItem from "./ProductItem";
 import CustomerInfo from './CustomerInfo'
 import Payment from './Payment'
+import { useLocation } from 'react-router-dom'
 
 const PlaceOrderPage = () => {
+    const location = useLocation();
+    const {itemsData, totalQuantity, totalPrice} = location.state;
+
     return (
         <>
         <div className="w-full h-fit px-24 py-28 bg-primary text-primary max-w-[90rem] mx-auto">
@@ -26,10 +30,11 @@ const PlaceOrderPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <ProductItem/>
-                            <ProductItem/>
-                            <ProductItem/>
-                            <ProductItem/>
+                            {
+                                itemsData.map((item, index) => (
+                                    <ProductItem key={index} childCate={item.childCate} name={item.name} newPrice={item.newPrice} parentCate={item.parentCate} quantity={item.quantity} weight={item.weight}/>
+                                ))
+                            }
                         </div>
                     </div>
                     {/* Payment */}
@@ -40,7 +45,7 @@ const PlaceOrderPage = () => {
                     <h1 className="text-lg font-bold">Đơn hàng của bạn: </h1>
                     <div className="flex justify-between text-sm font-medium">
                         <span>Tổng tiền hàng: </span>
-                        <span>{`${`$320.000`}`}</span>
+                        <span>{totalPrice}</span>
                     </div>
                     <div className="flex justify-between text-sm font-medium pb-3">
                         <span>Phí vận chuyển: </span>
@@ -49,7 +54,7 @@ const PlaceOrderPage = () => {
 
                     <div className="flex justify-between border-t-2 border-primary pt-3">
                         <span className="text-lg font-bold">Tổng hóa đơn:</span> 
-                        <span className="text-lg text-red--dark  font-bold">{`${`$320.000`}`}</span>
+                        <span className="text-lg text-red--dark  font-bold">{totalPrice}</span>
                     </div>
                     <button className="font-bold bg-green--dark text-white text-sm px-5 py-2 rounded-lg hover:opacity-90 my-2">Đặt hàng</button>
                 </div>
