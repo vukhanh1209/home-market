@@ -1,6 +1,8 @@
 import {useState, useEffect, useRef} from 'react'
 import ProductItem from "./ProductItem";
 import { Link, useNavigate } from "react-router-dom";
+import Modal from '../../component/UI/Modal';
+
 const cartItems = [
     {
         parentCate: 'Thịt, cá & trứng',
@@ -51,6 +53,7 @@ const cartItems = [
 
 const CartPage = () => {
     const [total, setTotal] = useState(0)
+    const [isNotifying, setIsNotifying] = useState(false)
     const navigate = useNavigate();
     let itemsData = [];
 
@@ -80,7 +83,10 @@ const CartPage = () => {
     }
     
     const handleCheckout = () => {
-        navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
+        setIsNotifying(true)
+        setTimeout(() => {
+            navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
+        }, 4000)
     }
 
 
@@ -127,7 +133,6 @@ const CartPage = () => {
 
                         }
                     </div>
-
                 </div>
                 <div className="sticky top-[100px] flex flex-col gap-y-3 col-span-1 bg-primary rounded-3xl text-primary p-5 h-fit">
                     <span className="text-xs font-medium ">{`Tổng cộng ${selectedItemQuantity} sản phẩm`}</span>
@@ -141,6 +146,11 @@ const CartPage = () => {
                     </button>
                 </div>
             </div>
+            
+            <Modal displaying={isNotifying} setDisplaying={setIsNotifying} state={"error"} desc={"Một trong những sản phẩm bạn chọn đã hết hàng"}/>
+            
+           
+
         </div>
     )
 }

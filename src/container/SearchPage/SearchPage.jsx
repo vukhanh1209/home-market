@@ -3,11 +3,14 @@ import CategoryFilter from '../../component/CategoryFilter'
 import Dropdown from '../../component/UI/Dropdown'
 import {VscClose} from 'react-icons/vsc'
 import { useState, createContext } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export const SelectedTagContext = createContext();
 
 const SearchPage = () => {
     const [selectedTag, setSelectedTag] = useState([]);
+    const location = useLocation();
+    console.log(location)
 
     const handleDeleteAllTags = () => {
         setSelectedTag([])

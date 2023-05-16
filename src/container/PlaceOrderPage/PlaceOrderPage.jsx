@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom'
 const PlaceOrderPage = () => {
     const location = useLocation();
     const {itemsData, totalQuantity, totalPrice} = location.state;
+    console.log(location)
 
     return (
         <>

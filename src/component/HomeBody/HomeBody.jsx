@@ -176,7 +176,7 @@ const HomeBody = () => {
                         spaceBetween={30}
                         centeredSlides={true}
                         autoplay={{
-                        delay: 5000,
+                        delay: 60000,
                         disableOnInteraction: false,
                         }}
                         // pagination={{

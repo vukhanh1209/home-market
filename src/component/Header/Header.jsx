@@ -1,4 +1,4 @@
-import { Fragment,useState} from "react";
+import { Fragment,useState, useRef} from "react";
 import {FiUser, FiShoppingBag} from 'react-icons/fi'
 import {CgMenuGridO} from 'react-icons/cg'
 import {BiChevronDown} from 'react-icons/bi'
@@ -9,7 +9,18 @@ import {TfiReceipt} from 'react-icons/tfi'
 
 const Header = () => {
     const navigate = useNavigate()
+    const SearchRef = useRef();
     const [loggedIn, setLoggedIn] = useState(true);
+
+    const handlePressEnter = (event) => {
+        const keyValue = SearchRef.current.value;
+        if(event.key == "Enter" && keyValue) {
+            console.log("enter")
+            navigate(`/search?key=${keyValue}`)
+        }
+    }
+
+
     return (
         <Fragment>
             <div className={"fixed w-full z-50 bg-[#F6F4F2] top-0"} id="Header">
@@ -24,16 +35,16 @@ const Header = () => {
                         </div>
 
 
-                        <form className="flex items-center font-semibold">   
-                            <label htmlFor="simple-search" className="sr-only">Search</label>
+                        <div className="flex items-center font-semibold">   
+                            {/* <label htmlFor="simple-search" className="sr-only">Search</label> */}
                             <div className="relative flex items-center w-full">
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg className="w-5 h-5"  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17L21 21" stroke="#3d3d3d" strokeWidth="1.44" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#3d3d3d" strokeWidth="1.44"></path> </g></svg>
                                 </div>
-                                <input type="text" id="simple-search" maxLength="16" className="bg-white text-[#383634] text-sm focus:outline-[#4C7C7D] placeholder:text-gray-500 placeholder:font-medium rounded-lg block w-[16rem] pl-10 p-2.5  min" placeholder="Tìm kiếm theo tên" required/>            
+                                <input ref={SearchRef} onKeyUp={event => handlePressEnter(event)} type="text" id="simple-search" maxLength="16" className="bg-white text-primary text-sm focus:outline-[#4C7C7D] placeholder:text-gray-500 placeholder:font-medium rounded-lg block w-[16rem] pl-10 p-2.5  min" placeholder="Tìm kiếm theo tên" required/>            
                             </div>
                             
-                        </form>
+                        </div>
 
                         <div className="flex justify-center text-[#383634]">
                             <div className={`flex items-center h-14 font-bold text-base z-10`}>
