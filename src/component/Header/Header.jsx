@@ -6,7 +6,46 @@ import { Link, useNavigate } from "react-router-dom";
 import {IoMailOutline} from 'react-icons/io5'
 import {HiOutlineUserCircle} from 'react-icons/hi2'
 import {TfiReceipt} from 'react-icons/tfi'
+import { removeVietnameseTones } from "../../utils/utils";
 
+const category = [
+    {
+        id: 1,
+        cate: 'Rau củ quả an toàn'
+    },
+    {
+        id: 2,
+        cate: 'Rau củ quả hữu cơ'
+    },
+    {
+        id: 3,
+        cate: 'Nấm & Đậu hũ'
+    },
+    {
+        id: 4,
+        cate: 'Thịt bò'
+    },
+    {
+        id: 5,
+        cate: 'Thịt heo'
+    },
+    {
+        id: 6,
+        cate: 'Cá'
+    },
+    {
+        id: 7,
+        cate: 'Trứng'
+    },
+    {
+        id: 8,
+        cate: 'Trái cây nhập'
+    },
+    {
+        id: 9,
+        cate: 'Trái cây Việt Nam'
+    },
+]
 const Header = () => {
     const navigate = useNavigate()
     const SearchRef = useRef();
@@ -15,8 +54,7 @@ const Header = () => {
     const handlePressEnter = (event) => {
         const keyValue = SearchRef.current.value;
         if(event.key == "Enter" && keyValue) {
-            console.log("enter")
-            navigate(`/search?key=${keyValue}`)
+            navigate(`/search?key=${removeVietnameseTones(keyValue).toLowerCase()}`);
         }
     }
 
@@ -47,10 +85,10 @@ const Header = () => {
                         </div>
 
                         <div className="flex justify-center text-[#383634]">
-                            <div className={`flex items-center h-14 font-bold text-base z-10`}>
-                                <a href="" className="relative group flex items-center h-full mx-4 rounded-xl hover:text-[#4C7C7D] ">
-                                    <div className="flex justify-center items-center">
-                                        <CgMenuGridO className="text-3xl mr-2"/>
+                            <div className={`flex items-center h-14  text-base z-10`}>
+                                <div href="" className="relative group flex items-center h-full mx-4 rounded-xl hover:text-[#4C7C7D] ">
+                                    <div className="flex justify-center items-center font-bold">
+                                        <CgMenuGridO className="text-3xl mr-2 "/>
                                         <div>
                                             Danh mục
                                         </div>
@@ -59,25 +97,18 @@ const Header = () => {
                                     
                     
                                     <div className="group-hover:inline-block hidden text-left mt-16" id="ProductDropdown">
-                                        <div className="absolute left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-[#383634] ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                            <div className="py-1" role="none">
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Edit</li>
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Duplicate</li>
-                                            </div>
-                                            <div className="py-1" role="none">
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-2">Archive</li>
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Move</li>
-                                            </div>
-                                            <div className="py-1" role="none">
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-4">Share</li>
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-5">Add to favorites</li>
-                                            </div>
-                                            <div className="py-1" role="none">
-                                                <li href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-6">Delete</li>
-                                            </div>
+                                        <div className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg font-medium py-2">
+                                            {
+                                                category.map((item, index) => (
+                                                    <Link to={`search?cate=${item.id}`} key={index} className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark">
+                                                            <span>{item.cate}</span>
+                                                    </Link>
+                                                ))
+                                            }
+                                            
                                         </div>
                                     </div>
-                                </a>
+                                </div>
 
                             </div>
                         </div>
@@ -90,7 +121,7 @@ const Header = () => {
                             loggedIn ? (
                                 <>
                                     <div className="group relative hover:cursor-pointer mr-10">
-                                        <div className="relative group flex items-center h-full mx-4 rounded-xl hover:text-[#4C7C7D] ">
+                                        <div className="relative group flex items-center h-full mx-4 rounded-xl ">
                                             <div className="flex justify-center items-center gap-x-2">
                                                 <FiUser className="text-2xl text-[#383634]"/>
                                                 <span className="text-sm text-slate-600 font-bold whitespace-nowrap">Khanh Nguyen</span>

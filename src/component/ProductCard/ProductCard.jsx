@@ -1,23 +1,24 @@
 import {useState} from 'react'
+import {RiAddFill} from 'react-icons/ri'
+import NumberInput from '../UI/NumberInput'
+import { formatCash } from '../../utils/utils'
+
 import product from '../../assets/p1.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faSoHeart, faCartShopping, faStar  } from '@fortawesome/free-solid-svg-icons'
-import {RiAddFill} from 'react-icons/ri'
-
 import { faHeart as faReHeart } from '@fortawesome/free-regular-svg-icons'
-import NumberInput from '../UI/NumberInput'
 
-
-const ProductCard = () => {
+const ProductCard = ({data}) => {
     const [loved, setLoved] = useState(false);
+  
 
-    const clickLoveButton = () => {
-        setLoved(!loved);
-    }
+    // const clickLoveButton = () => {
+    //     setLoved(!loved);
+    // }
     return (
         <div className="relative h-full w-full bg-white rounded-2xl border border-primary hover:-translate-y-1 hover:drop-shadow-lg transition-all">
-            <div className="w-full  rounded-t-2xl">
-                <img className="w-full" src={product} alt="" />
+            <div className="w-full  rounded-t-2xl overflow-hidden">
+                <img className="w-full " src={data.imagePath} alt="Ảnh sản phẩm" />
             </div>
             
             {/* <div className="absolute top-3 left-3 text-sm font-bold px-2 border border-[#dedede] bg-[#EAF5ED] text-[#4C7C7D] flex items-center justify-center rounded-full ">
@@ -35,10 +36,10 @@ const ProductCard = () => {
             </button> */}
             <div className=" flex flex-col items-start gap-2 w-full rounded-b-2xl p-4">
                 <div className="text-xs font-bold text-gray-400 ">
-                    <span>THỊT, CÁ & TRỨNG</span> - <span>THỊT HEO</span>
+                    <span>{data.category.toUpperCase()}</span>
                 </div>
-                <div className="flex w-full items-center justify-between">
-                    <h1 className="font-bold text-lg text-[#383634]">Fresh Broccoli</h1>
+                <div className="flex w-full items-center justify-between h-14 ">
+                    <h1 className="font-bold text-lg text-[#383634] line-clamp-2 ">{data.productName}</h1>
                     {/* <button 
                         onClick={clickLoveButton}
                         className={"transiton-all delay-100"}>
@@ -53,13 +54,13 @@ const ProductCard = () => {
                     
 
                     <div className="flex flex-col items-start">
-                        <div className="font-bold text-sm text-gray-500 line-through">
+                        {/* <div className="font-bold text-sm text-gray-500 line-through">
                             <span >$40.00</span>
-                        </div>
+                        </div> */}
                         <div className="font-bold text-lg text-[#e45959]">
-                            <span >$35.00</span>
+                            <span >{formatCash(data.price * 1000)}</span>
                         </div>
-                        <span className="text-sm text-gray-400 font-medium text-center my-auto">/200g</span>
+                        <span className="text-sm text-gray-400 font-medium text-center my-auto">{data.weight}</span>
 
                     </div>
 

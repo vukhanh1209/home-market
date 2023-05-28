@@ -188,18 +188,18 @@ const HomeBody = () => {
                     >
                     <SwiperSlide>
                         <div className="grid grid-cols-4 gap-5 w-full rounded-md">
+                            {/* <ProductCard/>
                             <ProductCard/>
                             <ProductCard/>
-                            <ProductCard/>
-                            <ProductCard/>
+                            <ProductCard/> */}
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className="grid grid-cols-4 gap-5 w-full rounded-md">
+                            {/* <ProductCard/>
                             <ProductCard/>
                             <ProductCard/>
-                            <ProductCard/>
-                            <ProductCard/>
+                            <ProductCard/> */}
                         </div>
                     </SwiperSlide>
                     </Swiper>

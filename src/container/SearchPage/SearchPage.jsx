@@ -2,41 +2,107 @@ import ProductCard from '../../component/ProductCard'
 import CategoryFilter from '../../component/CategoryFilter'
 import Dropdown from '../../component/UI/Dropdown'
 import {VscClose} from 'react-icons/vsc'
-import { useState, createContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useState, useEffect, createContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import API from '../../api'
 
 export const SelectedTagContext = createContext();
+const sortbyFilter = ['Giá tăng dần', 'Giá giảm dần', 'Phổ biến']
 
 const SearchPage = () => {
     const [selectedTag, setSelectedTag] = useState([]);
+    const [productList, setProductList] = useState([]);
+
     const location = useLocation();
-    console.log(location)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Check the search param and call API when the SearchPage is mounted
+        if(location.search.includes('cate')){
+            const currentSearch = new URLSearchParams(location.search);
+            const cate = currentSearch.get('cate');
+            API.get(`product/productByCategory?key=${cate}`)
+                .then(res => {
+                    setProductList(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+        else if(location.search.includes('key')) {
+            const currentSearch = new URLSearchParams(location.search);
+            const key = currentSearch.get('key');
+            API.get(`product/search?key=${key}`)
+                .then(res => {
+                    setProductList(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+        else {
+            API.get('product/all')
+                .then(res => {
+                    setProductList(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }, [])
+
 
     const handleDeleteAllTags = () => {
         setSelectedTag([])
     }
 
     const handleClickSelectedTag = (index) => {
+
+        const currentSearch = new URLSearchParams(location.search);
+        const cate = currentSearch.get('cate');
+
+        let newCate = cate.split(',').filter((item, i) => i != index).join(',');
+
+        if(newCate === "") {
+            navigate('/search')
+            API.get('product/all')
+                .then(res => {
+                    setProductList(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+      
+        else {
+            navigate(`/search?cate=${newCate}`)
+            API.get(`product/productByCategory?key=${newCate}`)
+            .then(res => {
+                setProductList(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+
         selectedTag.splice(index, 1);
         setSelectedTag([...selectedTag]);
     }
-    console.log('search',selectedTag)
 
 
-    const sortbyFilter = ['Giá tăng dần', 'Giá giảm dần', 'Phổ biến']
     return (
         <>
             <div className="px-24  mt-[7.5rem] mb-10 bg-[#F6F4F2]  h-fit grid grid-cols-5">
                 
                 <SelectedTagContext.Provider value={selectedTag}>
-                    <CategoryFilter setSelectedTag={setSelectedTag}/>
+                    <CategoryFilter setSelectedTag={setSelectedTag} setProductList={setProductList}/>
                 </SelectedTagContext.Provider>
 
                 <div className="flex flex-wrap gap-y-5 col-span-4 py-10 pl-10">
                     <h1 className="text-xl font-bold text-[#383634] px-2 ">Sản phẩm</h1>
 
                     <div className="w-full flex justify-between items-center">
-                        <span className="font-semibold text-base text-primary">Tìm thấy 20 sản phẩm</span>
+                        <span className="font-semibold text-base text-primary">{`Tìm thấy ${productList.length} sản phẩm`}</span>
                         <div className="flex items-center font-semibold text-base text-primary gap-4">
                             <span className="text-base font-medium ">Sắp xếp theo</span>
                             <Dropdown name={'Sort by'} childs={sortbyFilter} width={'150px'}/>
@@ -72,27 +138,15 @@ const SearchPage = () => {
                         <span onClick={handleDeleteAllTags} className="ml-4 font-medium text-sm text-black underline cursor-pointer">Xóa tất cả</span>
 
                     </div>
-                    <div className="flex gap-x-5 h-fit">
-                        <ProductCard/>
-                        <ProductCard/>
-                        <ProductCard/>
-                        <ProductCard/>
-
+                    <div className="grid grid-cols-4 gap-3">
+                        {
+                            productList.map((item, index) => (
+                                <ProductCard key={index} data={item}/>
+                            ))
+                        }
                     </div>
-                    <div className="flex gap-x-5 h-fit">
-                        <ProductCard/>
-                        <ProductCard/>
-                        <ProductCard/>
-                        <ProductCard/>
 
-                    </div>
-                    <div className="flex gap-x-5 h-fit">
-                        <ProductCard/>
-                        <ProductCard/>
-                        <ProductCard/>
-                        <ProductCard/>
 
-                    </div>
 
                 </div>
             </div>
