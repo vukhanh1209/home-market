@@ -34,24 +34,24 @@ const UserPage = () => {
                     </div>
                     <div className="flex flex-col pt-3 ">
                         <Link 
-                        to="account"
-                        onClick={() => setCategory('/account')} 
-                        className={`${category == "/account" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}
+                        to=""
+                        onClick={() => setCategory('/user')} 
+                        className={`${category == "/user" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}
                         >
                             <HiOutlineUserCircle className="w-6 h-6"/>
                             <span className="text-base font-medium cursor-pointer">Quản lý tài khoản</span>
                         </Link>
                         <Link 
                         to="order"
-                        onClick={() => setCategory('/order')} 
-                        className={`${category == "/order" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
+                        onClick={() => setCategory('/user/order')} 
+                        className={`${category == "/user/order" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
                             <IoMailOutline className="w-6 h-6"/>
                             <span className="text-base font-medium cursor-pointer">Đơn hàng của tôi</span>
                         </Link>
                         <Link 
                         to="payment"
-                        onClick={() => setCategory('/payment')} 
-                        className={`${category == "/payment" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
+                        onClick={() => setCategory('/user/payment')} 
+                        className={`${category == "/user/payment" ? 'bg-primary--dark' : ''} flex gap-x-3 py-3 px-4 hover:bg-primary--dark rounded-lg`}>
                             <TfiReceipt className="w-6 h-6"/>
                             <span className="text-base font-medium cursor-pointer">Đơn mua của tôi</span>
                         </Link>

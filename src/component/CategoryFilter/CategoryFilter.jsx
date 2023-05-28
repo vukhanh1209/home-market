@@ -73,8 +73,6 @@ const CategoryFilter = (props) => {
                 setSelectedTag(newSelectedTag)
             }
         }
-       
-
     }, [])
 
     const handleClickCategoryInput = (index) => {
@@ -83,14 +81,7 @@ const CategoryFilter = (props) => {
         if(!itemValue) {
             // Call API when check the category input
             let newCate = cateKeys == "" ? `${index + 1}` : cateKeys + `,${index + 1}`
-            navigate(`/search?cate=${newCate}`)
-            API.get(`product/productByCategory?key=${newCate}`)
-                .then(res => {
-                    setProductList(res.data)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            showProductsByCate(newCate);
 
             // Update selectedTag when check the category input
             const newSelectedTag = [...selectedTag, category[index].cate];
@@ -101,25 +92,11 @@ const CategoryFilter = (props) => {
             let newCate = cateKeys.split(',').filter((item) => item != index + 1).join(',');
 
             if(newCate === "") {
-                navigate('/search')
-                API.get('product/all')
-                    .then(res => {
-                        setProductList(res.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                showAllProducts();
             }
           
             else {
-                navigate(`/search?cate=${newCate}`)
-                API.get(`product/productByCategory?key=${newCate}`)
-                .then(res => {
-                    setProductList(res.data)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+                showProductsByCate(newCate);
             }
 
             // Update selectedTag when uncheck the category input
@@ -127,11 +104,28 @@ const CategoryFilter = (props) => {
             const newSelectedTag = [...selectedTag];
             setSelectedTag(newSelectedTag)
         }
+    }
 
-        
+    const showAllProducts = () => {
+        navigate('/search')
+        API.get('product/all')
+            .then(res => {
+                setProductList(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
-
-
+    const showProductsByCate = (newCate) => {
+        navigate(`/search?cate=${newCate}`)
+        API.get(`product/productByCategory?key=${newCate}`)
+        .then(res => {
+            setProductList(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
 

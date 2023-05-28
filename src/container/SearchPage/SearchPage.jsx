@@ -53,6 +53,7 @@ const SearchPage = () => {
 
 
     const handleDeleteAllTags = () => {
+        showAllProducts();
         setSelectedTag([])
     }
 
@@ -64,31 +65,39 @@ const SearchPage = () => {
         let newCate = cate.split(',').filter((item, i) => i != index).join(',');
 
         if(newCate === "") {
-            navigate('/search')
-            API.get('product/all')
-                .then(res => {
-                    setProductList(res.data)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            showAllProducts();
         }
       
         else {
-            navigate(`/search?cate=${newCate}`)
-            API.get(`product/productByCategory?key=${newCate}`)
-            .then(res => {
-                setProductList(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            showProductsByCate(newCate);
         }
 
         selectedTag.splice(index, 1);
         setSelectedTag([...selectedTag]);
     }
 
+
+    const showAllProducts = () => {
+        navigate('/search')
+        API.get('product/all')
+            .then(res => {
+                setProductList(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const showProductsByCate = (newCate) => {
+        navigate(`/search?cate=${newCate}`)
+        API.get(`product/productByCategory?key=${newCate}`)
+        .then(res => {
+            setProductList(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 
     return (
         <>

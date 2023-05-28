@@ -10,13 +10,13 @@ import ManageAccount from "../../container/UserPage/ManageAccount";
 import MyOrder from "../../container/UserPage/MyOrder";
 import MyPayment from "../../container/UserPage/MyPayment";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route , Outlet} from "react-router-dom";
 
 const MainLayout = () => {
     return (
         <Fragment>
             <Header/>
-            <Routes>
+            {/* <Routes>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/search' element={<SearchPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
@@ -27,14 +27,8 @@ const MainLayout = () => {
                     <Route path='payment' element={<MyPayment />} />
                 </Route>
 
-            </Routes>
-
-
-            {/* <HomePage/> */}
-            {/* <SearchPage/> */}
-            {/* <CartPage/> */}
-            {/* <PlaceOrderPage/> */}
-            {/* <UserPage/> */}
+            </Routes> */}
+            <Outlet/>
             <Footer/>
         </Fragment>
     )

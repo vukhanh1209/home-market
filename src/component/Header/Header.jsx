@@ -1,4 +1,4 @@
-import { Fragment,useState, useRef} from "react";
+import { Fragment,useState, useRef, useContext} from "react";
 import {FiUser, FiShoppingBag} from 'react-icons/fi'
 import {CgMenuGridO} from 'react-icons/cg'
 import {BiChevronDown} from 'react-icons/bi'
@@ -7,7 +7,8 @@ import {IoMailOutline} from 'react-icons/io5'
 import {HiOutlineUserCircle} from 'react-icons/hi2'
 import {TfiReceipt} from 'react-icons/tfi'
 import { removeVietnameseTones } from "../../utils/utils";
-
+import {setProfileToLocalStorage, clearLocalStorage} from '../../utils/auth'
+import { AppContext } from "../../context/app.context";
 const category = [
     {
         id: 1,
@@ -47,15 +48,35 @@ const category = [
     },
 ]
 const Header = () => {
+    const {isVerified, setIsVerified, setProfile} = useContext(AppContext)
     const navigate = useNavigate()
     const SearchRef = useRef();
-    const [loggedIn, setLoggedIn] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const handlePressEnter = (event) => {
         const keyValue = SearchRef.current.value;
         if(event.key == "Enter" && keyValue) {
             navigate(`/search?key=${removeVietnameseTones(keyValue).toLowerCase()}`);
         }
+    }
+
+    const handleLogOut = () => {
+        clearLocalStorage();
+        setIsVerified("0");
+    }
+
+    const handleLogIn = () => {
+        const profile = {
+            id: 1,
+            firstName: "Khanh",
+            lastName: "Nguyen",
+            email: "khanh@gmail.com",
+            phoneNumber: "0986354614",
+            address: "45 D5, Binh Thanh",
+        }
+        setIsVerified("1");
+        setProfile(profile);
+        setProfileToLocalStorage(profile)
     }
 
 
@@ -118,7 +139,7 @@ const Header = () => {
 
                     <div className="flex items-center justify-center z-10">
                         {
-                            loggedIn ? (
+                            isVerified == "1" ? (
                                 <>
                                     <div className="group relative hover:cursor-pointer mr-10">
                                         <div className="relative group flex items-center h-full mx-4 rounded-xl ">
@@ -136,15 +157,15 @@ const Header = () => {
                                                 
                                                 <div className="absolute right-0 z-10 mt-2 w-fit origin-top-right divide-y divide-gray-100 rounded-xl bg-white shadow-lg ring-1 ring-[#383634] ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                                     <div className="py-2 font-medium " role="none">
-                                                        <Link to="account" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-0">
+                                                        <Link to="user" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-0">
                                                             <HiOutlineUserCircle className="h-6 w-6"/>
                                                             <span> Quản lý tài khoản</span>
                                                         </Link>
-                                                        <Link to="order" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
+                                                        <Link to="user/order" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
                                                             <IoMailOutline className="h-6 w-6"/>
                                                             <span>Đơn hàng của tôi</span>
                                                         </Link>
-                                                        <Link to="payment" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
+                                                        <Link to="user/payment" className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark" role="menuitem" tabIndex="-1" id="menu-item-1">
                                                             <TfiReceipt className="h-6 w-6"/>
                                                             <span>Đơn mua của tôi</span>
                                                         </Link>
@@ -154,6 +175,7 @@ const Header = () => {
                                                         <li onClick={() => {
                                                             setLoggedIn(false)
                                                             navigate('/') 
+                                                            handleLogOut();
                                                             }} 
                                                             className="font-medium text-primary block px-4 py-2 text-sm whitespace-nowrap  text-center" role="menuitem" tabIndex="-1" id="menu-item-6">
                                                             Đăng xuất
@@ -173,8 +195,8 @@ const Header = () => {
                                 </>
                             ) : (
                                 <>
-                                    <button className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</button>
-                                    <button className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</button>
+                                    <Link to="" className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</Link>
+                                    <button onClick={handleLogIn} className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</button>
                                 </>
                             )
                         }
