@@ -7,7 +7,7 @@ import {IoMailOutline} from 'react-icons/io5'
 import {HiOutlineUserCircle} from 'react-icons/hi2'
 import {TfiReceipt} from 'react-icons/tfi'
 import { removeVietnameseTones } from "../../utils/utils";
-import {setProfileToLocalStorage, clearLocalStorage} from '../../utils/auth'
+import {clearLocalStorage} from '../../utils/auth'
 import { AppContext } from "../../context/app.context";
 const category = [
     {
@@ -48,10 +48,9 @@ const category = [
     },
 ]
 const Header = () => {
-    const {isVerified, setIsVerified, setProfile} = useContext(AppContext)
+    const {isVerified, setIsVerified, profile, setProfile} = useContext(AppContext)
     const navigate = useNavigate()
     const SearchRef = useRef();
-    const [loggedIn, setLoggedIn] = useState(false);
 
     const handlePressEnter = (event) => {
         const keyValue = SearchRef.current.value;
@@ -64,21 +63,6 @@ const Header = () => {
         clearLocalStorage();
         setIsVerified("0");
     }
-
-    const handleLogIn = () => {
-        const profile = {
-            id: 1,
-            firstName: "Khanh",
-            lastName: "Nguyen",
-            email: "khanh@gmail.com",
-            phoneNumber: "0986354614",
-            address: "45 D5, Binh Thanh",
-        }
-        setIsVerified("1");
-        setProfile(profile);
-        setProfileToLocalStorage(profile)
-    }
-
 
     return (
         <Fragment>
@@ -145,7 +129,7 @@ const Header = () => {
                                         <div className="relative group flex items-center h-full mx-4 rounded-xl ">
                                             <div className="flex justify-center items-center gap-x-2">
                                                 <FiUser className="text-2xl text-[#383634]"/>
-                                                <span className="text-sm text-slate-600 font-bold whitespace-nowrap">Khanh Nguyen</span>
+                                                <span className="text-sm text-slate-600 font-bold whitespace-nowrap">{`${profile.firstName || ""} ${profile.lastName || ""}`}</span>
                                                 <BiChevronDown className="text-lg text-[#383634]"/>
                                             </div>
 
@@ -173,9 +157,8 @@ const Header = () => {
                                                     </div>
                                                     <div className="py-1 hover:bg-primary--dark rounded-b-xl" role="none">
                                                         <li onClick={() => {
-                                                            setLoggedIn(false)
-                                                            navigate('/') 
                                                             handleLogOut();
+                                                            navigate('/'); 
                                                             }} 
                                                             className="font-medium text-primary block px-4 py-2 text-sm whitespace-nowrap  text-center" role="menuitem" tabIndex="-1" id="menu-item-6">
                                                             Đăng xuất
@@ -189,14 +172,14 @@ const Header = () => {
                                     <Link to='/cart'>
                                         <button className="relative h-10 flex gap-x-2 items-center justify-center rounded-lg text-[#383634] font-bold px-4  text-sm hover:bg-[#EDEAE7] bg-white" >
                                             <FiShoppingBag className="text-2xl"/>
-                                            <span className="whitespace-nowrap">{`Giỏ hàng: ${10}`}</span>
+                                            <span className="whitespace-nowrap">{`Giỏ hàng: ${profile.orderlist.length}`}</span>
                                         </button>
                                     </Link>
                                 </>
                             ) : (
                                 <>
-                                    <Link to="" className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</Link>
-                                    <button onClick={handleLogIn} className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</button>
+                                    <Link to="register" className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</Link>
+                                    <Link to="login" className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</Link>
                                 </>
                             )
                         }

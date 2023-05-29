@@ -3,10 +3,8 @@ import { getProfileFromLocalStorage } from '../utils/auth'
 
 
 const initialAppContext = {
-
-  // isVerify: getAccessTokenFromLocalStorage() !== '' ? '2' : getProfileFromLocalStorage() ? '1' : '0',
-  isVerify: getProfileFromLocalStorage() ? '1' : '0',
-  setIsVerify: () => null,
+  isVerified: getProfileFromLocalStorage() ? '1' : '0',
+  setIsVerifiedisVerified: () => null,
 
   profile: getProfileFromLocalStorage(),
   setProfile: () => null,
@@ -18,7 +16,7 @@ export const AppContext = createContext(initialAppContext)
 const AppProvider = ({ children }) => {
   const [profile, setProfile] = useState(initialAppContext.profile)
 
-  const [isVerified, setIsVerified] = useState(initialAppContext.isVerify)
+  const [isVerified, setIsVerified] = useState(initialAppContext.isVerified)
   // const [isVerified, setIsVerified] = useState('1')
 
 

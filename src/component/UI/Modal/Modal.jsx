@@ -4,19 +4,18 @@ import {AiOutlineExclamation} from 'react-icons/ai'
 
 const Modal = (props) => {
     let {state, desc, displaying , setDisplaying} = props;
-    console.log(setDisplaying)
     let title;
-    if(state == "error") title = "Có lỗi xảy ra!";
-    else if(state == "error") title = "Thành công!";
+    if(state) title = "Thành công!";
+    else title = "Có lỗi xảy ra!";
 
     if(displaying) {
         document.getElementById("Modal").style.opacity = 1;
         setTimeout(() => {
             document.getElementById("Modal").style.opacity = 0;
-        }, 3000)
+        }, 2000)
         setTimeout(() => {
             setDisplaying(false)
-        }, 3300)
+        }, 2300)
 
     }
 
@@ -24,13 +23,13 @@ const Modal = (props) => {
     return (
         <div className={`${displaying ? 'flex' : 'hidden'} fixed top-0 bottom-0 left-0 right-0 h-full items-center justify-center bg-[rgba(0,0,0,0.3)] z-[100] opacity-0 transition-opacity duration-300`} id="Modal">
             <div className="flex flex-col justify-center items-center h-fit w-[30%] drop-shadow-lg px-6 py-20 bg-white rounded-3xl " >
-                {state == "success" && (
+                {state && (
                     <div className="flex items-center justify-center p-3 rounded-full bg-[#D2F2E5]">
                         <BsCheck2 className=" w-16 h-16  text-primary"/>
                     </div>
 
                 )}
-                {state == "error" && (
+                {!state && (
                     <div className="flex items-center justify-center p-3 rounded-full bg-[#FFECEE]">
                         <AiOutlineExclamation className=" w-16 h-16  text-primary"/>
                     </div>

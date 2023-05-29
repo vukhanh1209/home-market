@@ -2,6 +2,8 @@ import {useState, useEffect, useRef} from 'react'
 import ProductItem from "./ProductItem";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from '../../component/UI/Modal';
+import API from '../../api';
+import { formatCash } from '../../utils/utils';
 
 const cartItems = [
     {
@@ -53,8 +55,22 @@ const cartItems = [
 
 const CartPage = () => {
     const [total, setTotal] = useState(0)
-    const [isNotifying, setIsNotifying] = useState(false)
+    const [notification, setNotification] = useState(false)
+    const [state, setState] = useState();
+    const [displaying, setDisplaying] = useState(false);
+    const [cartItems, setCartItems] = useState([])
     const navigate = useNavigate();
+
+    useEffect(() => {
+        API.get(`/cart/items?key=${JSON.parse(localStorage.getItem('profile')).userID}`)
+            .then(res => {
+                console.log(res)
+                setCartItems(res.data.itemList)
+            }) 
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
     let itemsData = [];
 
     let selectedItemQuantity = 0;
@@ -83,10 +99,24 @@ const CartPage = () => {
     }
     
     const handleCheckout = () => {
+        API.get(`cart/checkout?key=${cartItems[0].cartId}`)
+            .then(res => {
+                setState(res.data.success);
+                setNotification(res.data.message)
+                setDisplaying(true)
+                if(res.data.success) {
+                    setTimeout(() => {
+                        navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
+                    }, 4000)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
         setIsNotifying(true)
-        setTimeout(() => {
-            navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
-        }, 4000)
+        // setTimeout(() => {
+        //     navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
+        // }, 4000)
     }
 
 
@@ -113,13 +143,7 @@ const CartPage = () => {
                                 return (
                                     <ProductItem 
                                         key={index} 
-                                        parentCate={item.parentCate} 
-                                        childCate={item.childCate} 
-                                        name={item.name} 
-                                        weight={item.weight} 
-                                        oldPrice={item.oldPrice} 
-                                        newPrice={item.newPrice} 
-                                        quantity={item.quantity}
+                                        data={item}
                                         setTotal={setTotal}
                                     />
                                 )
@@ -136,7 +160,7 @@ const CartPage = () => {
                 </div>
                 <div className="sticky top-[100px] flex flex-col gap-y-3 col-span-1 bg-primary rounded-3xl text-primary p-5 h-fit">
                     <span className="text-xs font-medium ">{`Tổng cộng ${selectedItemQuantity} sản phẩm`}</span>
-                    <span className="text-xl font-bold">{total}</span>
+                    <span className="text-xl font-bold">{formatCash(total)}</span>
                     <button className="flex">
                         <button 
                             onClick={handleCheckout}
@@ -147,7 +171,7 @@ const CartPage = () => {
                 </div>
             </div>
             
-            <Modal displaying={isNotifying} setDisplaying={setIsNotifying} state={"error"} desc={"Một trong những sản phẩm bạn chọn đã hết hàng"}/>
+            <Modal displaying={displaying} setDisplaying={setDisplaying} state={state} desc={notification}/>
             
            
 

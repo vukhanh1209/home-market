@@ -131,6 +131,14 @@ const useRouteElement = () => {
                   }
                   
                 ]
+            },
+            {
+              path: path.placeOrder,
+                    element: (
+                      <Suspense fallback={<Loading />}>
+                        <PlaceOrderPage/>
+                      </Suspense>
+                    )
             }
           ]
         }
@@ -158,17 +166,15 @@ const useRouteElement = () => {
                     <Suspense fallback={<Loading />}>
                        <SignUpPage/>
                     </Suspense>
-                  ),
-                children: [
-                    {
-                        path: path.register + path.verify,
-                        element: (
-                            <Suspense fallback={<Loading />}>
-                               <VerifyPage/>
-                            </Suspense>
-                          )
-                    }
-                ]
+                  )
+            },
+            {
+              path: `${path.verify}`,
+              element: (
+                  <Suspense fallback={<Loading />}>
+                     <VerifyPage/>
+                  </Suspense>
+                )
             }
           ]
         }

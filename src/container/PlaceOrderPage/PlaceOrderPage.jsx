@@ -1,12 +1,34 @@
 import ProductItem from "./ProductItem";
 import CustomerInfo from './CustomerInfo'
 import Payment from './Payment'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate, useState } from 'react-router-dom'
+import API from "../../api";
 
 const PlaceOrderPage = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const [customerData, setCustomerData] = useState();
+    const [paymentMethod, setPaymentMethod] = useState();
+
+
     const {itemsData, totalQuantity, totalPrice} = location.state;
+    console.log(itemsData)
     console.log(location)
+    // const placeOrderData = {
+    //     orderDate: ,
+    //     address: ,
+    //     paymentMethod: ,
+    //     cartID:
+    // }
+    const handlePlaceOrder = () => {
+        API.post('cart/place_order', )
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 
     return (
         <>
@@ -33,7 +55,7 @@ const PlaceOrderPage = () => {
                             </div>
                             {
                                 itemsData.map((item, index) => (
-                                    <ProductItem key={index} childCate={item.childCate} name={item.name} newPrice={item.newPrice} parentCate={item.parentCate} quantity={item.quantity} weight={item.weight}/>
+                                    <ProductItem key={index} name={item.itemName} price={item.price} quantity={item.quantity} weight={item.weight}/>
                                 ))
                             }
                         </div>
@@ -57,7 +79,7 @@ const PlaceOrderPage = () => {
                         <span className="text-lg font-bold">Tổng hóa đơn:</span> 
                         <span className="text-lg text-red--dark  font-bold">{totalPrice}</span>
                     </div>
-                    <button className="font-bold bg-green--dark text-white text-sm px-5 py-2 rounded-lg hover:opacity-90 my-2">Đặt hàng</button>
+                    <button onClick={handlePlaceOrder} className="font-bold bg-green--dark text-white text-sm px-5 py-2 rounded-lg hover:opacity-90 my-2">Đặt hàng</button>
                 </div>
             </div>
         </div>

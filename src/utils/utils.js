@@ -33,4 +33,34 @@ function formatCash(price) {
     })
 }
 
-export {removeVietnameseTones, formatCash}
+function isValidEmail(email) {
+    // Regular expression pattern for email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    return emailPattern.test(email);
+  }
+  
+  function isValidPassword(password) {
+    // Minimum password length requirement
+    const minLength = 8;
+  
+    // Regular expression pattern for password validation
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+  
+    return password.length >= minLength && passwordPattern.test(password);
+  }
+
+  function isValidPhoneNumber(phoneNumber) {
+    // Regular expression pattern for phone number validation
+    const phonePattern = /^0\d{9}$/;
+  
+    return phonePattern.test(phoneNumber);
+  }
+  
+  
+  function checkConfirmPassword(password, confirmPassword) {
+    return confirmPassword === password;
+  }
+
+export {removeVietnameseTones, formatCash, isValidEmail, isValidPassword, isValidPhoneNumber, checkConfirmPassword}
+
