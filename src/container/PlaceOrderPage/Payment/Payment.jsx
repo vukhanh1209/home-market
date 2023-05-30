@@ -17,8 +17,8 @@ const Payment = (props) => {
             <div className="flex justify-between items-center">
                 <h3 className="font-bold text-xl ">Phương thức thanh toán:</h3>
                 <div className="flex gap-x-6 items-center">
-                    <span className="font-medium text-base">{payment}</span>
-                    {
+                    <span className="font-medium text-base">Thanh toán khi nhận hàng</span>
+                    {/* {
                         !isChanging && (
                             <button
                                 onClick={() => setIsChanging(true)}
@@ -26,7 +26,7 @@ const Payment = (props) => {
                                 Thay đổi
                             </button>
                         )
-                    }
+                    } */}
                 </div>
             </div>
             {

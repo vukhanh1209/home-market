@@ -29,7 +29,9 @@ const CartPage = () => {
 
     const handleSeclectAll = () => {
         const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
-        cartItemInput.forEach(item => item.click());
+        cartItemInput.forEach(item => {
+            if(!item.checked)  item.click()
+        });
 
     }
     const handleDeleteSelectedItem = () => {
@@ -51,8 +53,20 @@ const CartPage = () => {
     }
     
     const handleCheckout = () => {
-        API.get(`cart/checkout?key=${cartItems[0].cartId}`)
+        const selectedItems = [];
+        const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input")
+        cartItemInput.forEach((item) => {
+            if(item.checked) {
+                selectedItems.push(item.getAttribute('itemid'))
+            };
+        });
+
+        const selectedItemsKey = selectedItems.join(',');
+        console.log('selectedItemsKey',selectedItemsKey)
+
+        API.get(`cart/checkout?key=${selectedItemsKey}`)
             .then(res => {
+                console.log(res)
                 setState(res.data.success);
                 setNotification(res.data.message)
                 setDisplaying(true)
@@ -65,7 +79,7 @@ const CartPage = () => {
             .catch(err => {
                 console.log(err)
             })
-        setIsNotifying(true)
+        // setIsNotifying(true)
         // setTimeout(() => {
         //     navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
         // }, 4000)

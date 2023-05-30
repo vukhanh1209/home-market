@@ -32,7 +32,7 @@ const ProductItem = (props) => {
         }
     }, [itemQuantity])
 
-    const handleChangeTotal = (event) => {
+    const handleClickCartItem = (event) => {
         if(event.target.checked) {
             setTotal(prev => prev += price * 1000 * quantity)
         }
@@ -59,7 +59,7 @@ const ProductItem = (props) => {
         <div className="flex flex-col mx-4 py-6 border-b-2 border-primary" id={`cart-item-${itemIndex}`}>
             <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-x-4">
-                    <input  onChange={handleChangeTotal} type="checkbox" className="w-4 h-4 cart-item__input accent-[#4C7C7D]"/>
+                    <input  onChange={handleClickCartItem} type="checkbox" itemID={cartItemid} className="w-4 h-4 cart-item__input accent-[#4C7C7D]"/>
                     <div className="border border-primary bg-white rounded-xl">
                         <img src={urlImage} alt="" className="w-20 h-20 rounded-xl"/>
                     </div>

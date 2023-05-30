@@ -1,11 +1,5 @@
 import {useState, useRef, useEffect} from 'react'
-import API from '../../../api'
-// const info = {
-//     firstName: 'Khánh',
-//     lastName: 'Nguyễn',
-//     phone: '0986354614',
-//     address: '45D/25 D5, Bình Thạnh, Hồ Chí Minh'
-// }
+
 
 const CustomerInfo = (props) => {
     const [lastName, setLastName] = useState('')
@@ -13,9 +7,9 @@ const CustomerInfo = (props) => {
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const {setCustomerData} = props
+    const profile = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
-        const profile = JSON.parse(localStorage.getItem('profile'));
         setLastName(profile.lastName)
         setFirstName(profile.firstName)
         setPhone(profile.phoneNumber)
@@ -40,10 +34,11 @@ const CustomerInfo = (props) => {
     }
 
     const handleCancelEdting = () => {
-        setLastName(info.lastName);
-        setFirstName(info.firstName);
-        setPhone(info.phone);
-        setAddress(info.address);
+        setLastName(profile.lastName);
+        setFirstName(profile.firstName);
+        setPhone(profile.phoneNumber);
+        setAddress(profile.address);
+        console.log('cancel')
         setIsEditing(false);
     }
 
@@ -76,7 +71,7 @@ const CustomerInfo = (props) => {
                                     Xác nhận
                                 </button>
                                 <button 
-                                    onClick={() => handleCancelEdting()} 
+                                    onClick={handleCancelEdting} 
                                     className="text-primary bg-transparent border-2 border-primary hover:bg-primary--dark rounded-xl font-semibold text-xs px-4 py-2.5 text-center"
                                 >
                                     Hủy
@@ -84,7 +79,7 @@ const CustomerInfo = (props) => {
                             </>
                         ) : (
                             <button 
-                                onClick={() => setIsEditing(!isEditing)} 
+                                onClick={() => setIsEditing(true)} 
                                 className="text-primary bg-transparent border-2 border-primary hover:bg-primary--dark rounded-xl font-semibold text-xs px-4 py-2.5 text-center"
                             >
                                 Thay đổi

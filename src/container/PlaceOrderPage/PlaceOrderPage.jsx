@@ -20,8 +20,10 @@ const PlaceOrderPage = () => {
     const {itemsData, totalQuantity, totalPrice} = location.state;
 
     const currentDate = new Date();
-
-
+    let cartItemIDList = [];
+    itemsData.forEach(item => {
+        cartItemIDList.push(item.cartItemid)
+    })
     const placeOrderData = {
         orderDate: currentDate,
         address: customerData.address,
@@ -29,7 +31,7 @@ const PlaceOrderPage = () => {
         firstName: customerData.firstName,
         lastName: customerData.lastName,
         paymentMethod: paymentMethod,
-        cartID: itemsData[0].cartId
+        cartItemID: cartItemIDList
     }
 
     const handlePlaceOrder = () => {
