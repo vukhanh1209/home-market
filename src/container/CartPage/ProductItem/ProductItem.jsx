@@ -5,34 +5,38 @@ import { useState, useEffect } from 'react';
 
 const ProductItem = (props) => {
     const { data, setTotal, setDisplaying, setState, setNotification} = props;
-    const {urlImage, categoryName, itemName, weight, price, quantity, cartItemid, itemIndex} = data;
-    const [itemQuantity, setItemQuantity] = useState(quantity)
+    let {urlImage, categoryName, itemName, weight, price, quantity, cartItemid, itemIndex} = data;
+    const [itemQuantity, setItemQuantity] = useState()
+
+    if(itemQuantity) quantity = itemQuantity;
 
     useEffect(() => {
-        const updateCartItemData = {
-            quantity: itemQuantity,
-            item_id: data.cartItemid,
+        if(itemQuantity) {
+            const updateCartItemData = {
+                quantity: itemQuantity,
+                item_id: data.cartItemid,
+            }
+            API.post('cart/edit', updateCartItemData)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    setState(false);
+                    setNotification("Số lượng sản phẩm trong kho không đủ")
+                    setDisplaying(true);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000)
+                    console.log(err)
+                })
         }
-        API.post('cart/edit', updateCartItemData)
-            .then(res => {
-                console.log(res)
-            })
-            .catch(err => {
-                setState(false);
-                setNotification("Số lượng sản phẩm trong kho không đủ")
-                setDisplaying(true);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2500)
-                console.log(err)
-            })
     }, [itemQuantity])
 
     const handleChangeTotal = (event) => {
         if(event.target.checked) {
-            setTotal(prev => prev += price * 1000 * itemQuantity)
+            setTotal(prev => prev += price * 1000 * quantity)
         }
-        else setTotal(prev => prev -= price  * 1000* itemQuantity)
+        else setTotal(prev => prev -= price  * 1000* quantity)
     }
 
     const handleDeleteCartItem = () => {
@@ -74,7 +78,7 @@ const ProductItem = (props) => {
                     <div className="grid grid-cols-3 gap-x-10  text-primary">
                         <span className="text-center font-semibold text-base">{formatCash(price * 1000)}</span>
                         <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" quantity={quantity} setItemQuantity={setItemQuantity}/>
-                        <span className="text-center w-20 font-semibold text-base text-red--dark ">{formatCash(price * 1000 * itemQuantity)}</span>
+                        <span className="text-center w-20 font-semibold text-base text-red--dark ">{formatCash(price * 1000 * quantity)}</span>
 
                     </div>
                     <span onClick={handleDeleteCartItem} className="text-primary text-sm font-semibold cursor-pointer underline ml-8">Xóa</span>

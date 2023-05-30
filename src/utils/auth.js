@@ -1,28 +1,29 @@
 
 
 export const LocalStorageEventTarget = new EventTarget()
-
-// export const saveAccessTokenToLocalStorage = (access_token) => {
-//   localStorage.setItem('access_token', access_token)
-// }
-
-// export const setRefreshTokenToLocalStorage = (refresh_token) => {
-//   localStorage.setItem('refresh_token', refresh_token)
-// }
+export const SessionStorageEventTarget = new EventTarget();
 
 export const clearLocalStorage = () => {
-  // localStorage.removeItem('access_token')
-  // localStorage.removeItem('refresh_token')
   localStorage.removeItem('profile')
   const clearLocalStorageEvent = new Event('clearLocalStorage')
   LocalStorageEventTarget.dispatchEvent(clearLocalStorageEvent)
 }
 
-// export const getAccessTokenFromLocalStorage = () => {
-//   return localStorage.getItem('access_token') || ''
-// }
+export const clearSessionStorage = () => {
+  sessionStorage.removeItem('customer_cart');
+  const clearSessionStorageEvent = new Event('clearSessionStorage')
+  SessionStorageEventTarget.dispatchEvent(clearSessionStorageEvent)
+}
 
-// export const getRefreshTokenFromLocalStorage = () => localStorage.getItem('refresh_token') || ''
+export const getCustomerCartFromSesstionStorage = () => {
+  const result = sessionStorage.getItem('customer_cart')
+  return result ? JSON.parse(result) : null
+}
+
+export const setCustomerCartFromSesstionStorage = (customerCart) => {
+  sessionStorage.setItem('customer_cart', JSON.stringify(customerCart))
+}
+
 
 export const getProfileFromLocalStorage = () => {
   const result = localStorage.getItem('profile')

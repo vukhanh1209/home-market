@@ -6,6 +6,7 @@ import Modal from "../../component/UI/Modal";
 import { isValidEmail, isValidPassword } from "../../utils/utils";
 import {setProfileToLocalStorage, clearLocalStorage} from '../../utils/auth'
 import { AppContext } from "../../context/app.context";
+import { clearSessionStorage, getCustomerCartFromSesstionStorage } from "../../utils/auth";
 
 const LogInPage = () => {
   const {setProfile, setIsVerified} = useContext(AppContext); 
@@ -27,6 +28,28 @@ const LogInPage = () => {
     return false;
   }
 
+  const addItemToCart = (item) => {
+    API.post('cart/add', item)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+
+    })
+  }
+
+  const addSessionToCart = (id) => {
+    const cartItems = getCustomerCartFromSesstionStorage();
+    cartItems.forEach(item => {
+      const itemAddedUserID = {
+        ...item,
+        user_id: id
+      }
+      addItemToCart(itemAddedUserID)
+    })
+  }
+
   const handleLogIn = (id) => {
     API.get(`user/getuser?key=${id}`)
       .then(res => {
@@ -34,6 +57,10 @@ const LogInPage = () => {
         setProfile(profile);
         setProfileToLocalStorage(profile)
         setIsVerified(true);
+        setTimeout(() => {
+          addSessionToCart(id)
+          clearSessionStorage();
+        }, 1000)
       })
       .catch(err => {
         console.log(err)
@@ -52,10 +79,6 @@ const LogInPage = () => {
             setNotification(res.data.status)
             setDisplaying(true);
             handleLogIn(res.data.id);
-            console.log('Dang nhap')
-            // setTimeout(() => {
-            //   navigate('/')
-            // }, 5500)
           } 
           else {
             setState(false);

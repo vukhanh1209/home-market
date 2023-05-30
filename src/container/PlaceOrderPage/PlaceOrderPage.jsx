@@ -38,9 +38,16 @@ const PlaceOrderPage = () => {
             setState(res.data.success)
             setNotification(res.data.message)
             setDisplaying(true)
-            setTimeout(() => {
-                navigate('/cart')
-            }, 2000)
+            if(res.data.success) {
+                setTimeout(() => {
+                    navigate('/user/order')
+                }, 2000)
+            }
+            else {
+                setTimeout(() => {
+                    navigate('/cart')
+                }, 2000)
+            }
         })
         .catch(err => {
             console.log(err)

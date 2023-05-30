@@ -64,6 +64,11 @@ const Header = () => {
         setIsVerified("0");
     }
 
+    const handleClickMenuItem = (id) => {
+        navigate(`search?cate=${id}`)
+        window.location.reload();
+    }
+
     return (
         <Fragment>
             <div className={"fixed w-full z-50 bg-[#F6F4F2] top-0"} id="Header">
@@ -105,9 +110,9 @@ const Header = () => {
                                         <div className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg font-medium py-2">
                                             {
                                                 category.map((item, index) => (
-                                                    <Link to={`search?cate=${item.id}`} key={index} className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark">
+                                                    <li onClick={() => handleClickMenuItem(item.id)} key={index} className="flex items-center gap-x-3 text-primary px-6 py-2 text-sm whitespace-nowrap hover:bg-primary--dark cursor-pointer">
                                                             <span>{item.cate}</span>
-                                                    </Link>
+                                                    </li>
                                                 ))
                                             }
                                             
@@ -178,8 +183,9 @@ const Header = () => {
                                 </>
                             ) : (
                                 <>
+                                   
                                     <Link to="register" className="px-4 py-3 rounded-full text-[#383634] font-semibold text-sm hover:bg-primary--dark mr-3" >Đăng ký</Link>
-                                    <Link to="login" className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 ">Đăng nhập</Link>
+                                    <Link to="login" className="px-4 py-3 rounded-full textt-[#fff] font-semibold text-sm bg-[#4C7C7D] hover:opacity-80 mr-3">Đăng nhập</Link>
                                 </>
                             )
                         }

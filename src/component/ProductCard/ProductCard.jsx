@@ -5,30 +5,50 @@ import { formatCash } from '../../utils/utils'
 import API from '../../api'
 import { AppContext } from '../../context/app.context'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ProductCard = (props) => {
     // const [loved, setLoved] = useState(false);
+    const navigate = useNavigate();
     const {data, setDisplaying, setState, setNotification} = props;
     const [quantity, setQuantity] = useState(0);
-    // const {profile, setProfile} = useContext(AppContext);
-    const cartItem = {
-        product_id: data.id,
-        user_id: JSON.parse(localStorage.getItem('profile')).userID,
-        quantity
+    const {isVerified} = useContext(AppContext);
+
+    let cartItem = {}
+
+    if(isVerified == "1") {
+        cartItem = {
+            product_id: data.id,
+            user_id: JSON.parse(localStorage.getItem('profile')).userID,
+            quantity
+        };
     }
+
+
+    const handleRegisteredAddToCart = () => {
+        if(quantity <= 0) {
+            setState(false)
+            setNotification("Số lượng sản phẩm phải lớn hơn 0")
+            setDisplaying(true)
+        }
+        else {     
+            API.post('cart/add', cartItem)
+                .then(res => {
+                    setState(res.data.success)
+                    setNotification(res.data.message)
+                    setDisplaying(true)
+                })
+                .catch(err => {
+                    setState(false)
+                    setNotification("Số lượng sản phẩm trong kho không đủ")
+                    setDisplaying(true);
+                    console.error(err)
+                })
+        }
+    }
+    
     const handleAddToCart = () => {
-        API.post('cart/add', cartItem)
-            .then(res => {
-                setState(res.data.success)
-                setNotification(res.data.message)
-                setDisplaying(true)
-            })
-            .catch(err => {
-                setState(false)
-                setNotification("Số lượng sản phẩm trong kho không đủ")
-                setDisplaying(true);
-                console.error(err)
-            })
+        navigate('/login')
     }
   
     return (
@@ -61,10 +81,20 @@ const ProductCard = (props) => {
 
                     <div className="flex flex-col items-end">
                         <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" border="#E8E5E2" setQuantity={setQuantity}/>
-                        <button onClick={handleAddToCart} className="flex items-center justify-center bg-white border border-primary text-[#383634] text-sm font-bold px-3 py-2 my-2 rounded-lg w-full  hover:bg-[#4C7C7D] hover:text-white transition-all">
-                            <span className="my-auto font-bold">Giỏ</span>         
-                            <RiAddFill className="ml-2 mr-[-4px] w-5 h-5 "/>
-                        </button>
+                        {
+                            isVerified == "1" ? (
+                                <button onClick={handleRegisteredAddToCart} className="flex items-center justify-center bg-white border border-primary text-[#383634] text-sm font-bold px-3 py-2 my-2 rounded-lg w-full  hover:bg-[#4C7C7D] hover:text-white transition-all">
+                                    <span className="my-auto font-bold">Giỏ</span>         
+                                    <RiAddFill className="ml-2 mr-[-4px] w-5 h-5 "/>
+                                </button>
+                            ) : (
+                                <button onClick={handleAddToCart} className="flex items-center justify-center bg-white border border-primary text-[#383634] text-sm font-bold px-3 py-2 my-2 rounded-lg w-full  hover:bg-[#4C7C7D] hover:text-white transition-all">
+                                <span className="my-auto font-bold">Giỏ</span>         
+                                <RiAddFill className="ml-2 mr-[-4px] w-5 h-5 "/>
+                            </button>
+                            )
+                        }
+                       
                     </div>
                     
                 </div>

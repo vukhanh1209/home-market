@@ -134,11 +134,11 @@ const CategoryFilter = (props) => {
         <div className="sticky top-0 col-span-1 my-10 pr-10  z-20 border-r border-primary">
             <h1 className="text-xl font-bold text-[#383634] px-2 mb-6">Bộ lọc</h1>
 
-            <div className="h-40 border-b border-primary">
+            {/* <div className="h-40 border-b border-primary">
                 <h1 className="text-lg font-semibold text-[#383634] px-2">Lọc theo giá</h1>
                 <div className=" ">
                 </div>
-            </div>
+            </div> */}
 
             <div className="">
                 <h1 className="text-lg font-semibold text-[#383634] px-2 pt-5">Loại sản phẩm</h1>
