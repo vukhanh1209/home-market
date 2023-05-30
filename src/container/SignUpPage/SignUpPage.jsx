@@ -38,10 +38,16 @@ const SignUpPage = () => {
     if(checkFilledInAllInput() && isValidEmail(email) && isValidPhoneNumber(phoneNumber) && isValidPassword(password) && checkConfirmPassword(password, confirmPassword)) {
       sessionStorage.setItem('register', JSON.stringify(registerInfo))
       API.post('user/register', registerInfo)
-        .then(response => {
-          alert(response.status)
-          console.log('registerAPI',response)
-          navigate('/verify')
+        .then(res => {
+          if(res.data.isActive) {
+            setNotification(res.data.status)
+            setState(false)
+            setDisplaying(true)
+          }
+          else {
+            navigate('/verify')
+          }
+          console.log('registerAPI',res)
         })
         .catch(err => {
           console.error(err);

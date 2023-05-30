@@ -24,7 +24,6 @@ const ProductCard = ({data}) => {
             .catch(err => {
                 console.error(err)
             })
-        // const newCart
     }
   
     return (

@@ -8,16 +8,8 @@ import MyPayment from './MyPayment'
 import MyOrder from './MyOrder'
 import { useLocation, Link, Outlet } from 'react-router-dom'
 
-
-const info = {
-    firstName: 'Khanh',
-    lastName: 'Nguyen',
-    birthday: '12/09/2001',
-    phone: '0986354614',
-    address: '45D/25 D5, Bình Thạnh, Hồ Chí Minh'
-}
-
 const UserPage = () => {
+    const profile = JSON.parse(localStorage.getItem('profile'));
     const location = useLocation();
     const [category, setCategory] = useState(location.pathname);
     useEffect(() =>{
@@ -30,7 +22,7 @@ const UserPage = () => {
                 <div className="sticky top-28 min-h-[30rem] h-fit flex flex-col col-span-1 bg-primary text-primary  rounded-3xl px-6 ">
                     <div className="flex flex-col items-center justify-center pt-12 pb-10 border-b-2 border-primary">
                         <img src={avatar} alt="" className="h-20 w-20 object-cover rounded-full" />
-                        <span className="font-semibold text-base mt-3">{`${info.firstName} ${info.lastName}`}</span>
+                        <span className="font-semibold text-base mt-3">{`${profile.firstName} ${profile.lastName}`}</span>
                     </div>
                     <div className="flex flex-col pt-3 ">
                         <Link 
@@ -58,16 +50,7 @@ const UserPage = () => {
                     </div>
                 </div>
                 <Outlet/>
-                {/* {
-                    category == "ManageAccount" &&  <ManageAccount/>
-                } 
-                {
-                    category == "MyOrder" &&  <MyOrder/>
-                } 
-                {
-                    category == "MyPayment" &&  <MyPayment/>
-                }  */}
-                
+    
             </div>
         </div>
     )

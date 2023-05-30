@@ -1,28 +1,22 @@
 import InfoItem from '../InfoItem'
 
 
-const info = {
-    firstName: 'Khanh',
-    lastName: 'Nguyen',
-    birthday: '12/09/2001',
-    phone: '0986354614',
-    address: '45D/25 D5, Bình Thạnh, Hồ Chí Minh'
-}
-
 const ManageAccount = () => {
+    const profile = JSON.parse(localStorage.getItem('profile'));
+
     return (
         <div className="flex flex-col col-span-3 px-10 py-8 bg-primary rounded-3xl ">
             <h1 className="text-lg font-semibold">Thông tin khách hàng</h1>
             <div className=""> 
-                <InfoItem canEdit={true} name="Tên của bạn" value="Khanh Nguyen"/>
+                <InfoItem canEdit={true} name="Tên của bạn" value={`${profile.firstName} ${profile.lastName}`}/>
                 <div className="border-t-2 border-primary">
-                    <InfoItem canEdit={true} name="Ngày sinh" value={info.birthday}/>
+                    <InfoItem canEdit={true} name="Địa chỉ" value={profile.address}/>
                 </div>
                 <div className="border-t-2 border-primary">
-                    <InfoItem canEdit={true} name="Địa chỉ" value={info.address}/>
+                    <InfoItem canEdit={true} name="Số điện thoại" value={profile.phoneNumber}/>
                 </div>
                 <div className="border-t-2 border-primary">
-                    <InfoItem canEdit={false} name="Số điện thoại" value={info.phone}/>
+                    <InfoItem canEdit={false} name="Email" value={profile.email}/>
                 </div>
 
             </div>

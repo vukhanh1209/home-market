@@ -172,7 +172,7 @@ const Header = () => {
                                     <Link to='/cart'>
                                         <button className="relative h-10 flex gap-x-2 items-center justify-center rounded-lg text-[#383634] font-bold px-4  text-sm hover:bg-[#EDEAE7] bg-white" >
                                             <FiShoppingBag className="text-2xl"/>
-                                            <span className="whitespace-nowrap">{`Giỏ hàng: ${profile.orderlist.length}`}</span>
+                                            <span className="whitespace-nowrap">Giỏ hàng</span>
                                         </button>
                                     </Link>
                                 </>
