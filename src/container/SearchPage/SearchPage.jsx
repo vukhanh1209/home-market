@@ -5,6 +5,7 @@ import {VscClose} from 'react-icons/vsc'
 import { useState, useEffect, createContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import API from '../../api'
+import Modal from '../../component/UI/Modal'
 
 export const SelectedTagContext = createContext();
 const sortbyFilter = ['Giá tăng dần', 'Giá giảm dần', 'Phổ biến']
@@ -12,6 +13,9 @@ const sortbyFilter = ['Giá tăng dần', 'Giá giảm dần', 'Phổ biến']
 const SearchPage = () => {
     const [selectedTag, setSelectedTag] = useState([]);
     const [productList, setProductList] = useState([]);
+    const [notification, setNotification] = useState(false)
+    const [state, setState] = useState();
+    const [displaying, setDisplaying] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -150,7 +154,13 @@ const SearchPage = () => {
                     <div className="grid grid-cols-4 gap-3">
                         {
                             productList.map((item, index) => (
-                                <ProductCard key={index} data={item}/>
+                                <ProductCard 
+                                    key={index} 
+                                    data={item} 
+                                    setDisplaying={setDisplaying}
+                                    setState={setState}
+                                    setNotification={setNotification}
+                                />
                             ))
                         }
                     </div>
@@ -158,6 +168,8 @@ const SearchPage = () => {
 
 
                 </div>
+                <Modal displaying={displaying} setDisplaying={setDisplaying} state={state} desc={notification}/>
+
             </div>
         </>
     )

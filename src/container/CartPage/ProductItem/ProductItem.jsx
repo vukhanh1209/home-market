@@ -1,25 +1,61 @@
-import NumberInput from '../../../component/UI/NumberInput';
-import product from '../../../assets/p1.png'
-import {useState} from 'react'
+import NumberInput from '../NumberInput';
 import { formatCash } from '../../../utils/utils';
-
+import API from '../../../api';
+import { useState, useEffect } from 'react';
 
 const ProductItem = (props) => {
-    const { data, setTotal} = props;
-    const {urlImage, categoryName, itemName, weight, price, quantity} = data;
-    console.log(props)
+    const { data, setTotal, setDisplaying, setState, setNotification} = props;
+    const {urlImage, categoryName, itemName, weight, price, quantity, cartItemid, itemIndex} = data;
+    const [itemQuantity, setItemQuantity] = useState(quantity)
+
+    useEffect(() => {
+        const updateCartItemData = {
+            quantity: itemQuantity,
+            item_id: data.cartItemid,
+        }
+        API.post('cart/edit', updateCartItemData)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                setState(false);
+                setNotification("Số lượng sản phẩm trong kho không đủ")
+                setDisplaying(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2500)
+                console.log(err)
+            })
+    }, [itemQuantity])
 
     const handleChangeTotal = (event) => {
         if(event.target.checked) {
-            setTotal(prev => prev += price * 1000 * quantity)
+            setTotal(prev => prev += price * 1000 * itemQuantity)
         }
-        else setTotal(prev => prev -= price  * 1000* quantity)
+        else setTotal(prev => prev -= price  * 1000* itemQuantity)
     }
+
+    const handleDeleteCartItem = () => {
+        API.delete(`cart/delete?key=${cartItemid}`)
+        .then((res) => {
+            console.log(res)
+            setState(res.data.success);
+            setNotification(res.data.message)
+            setDisplaying(true)
+            if(res.data.success) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2500)
+            }
+        })
+        .catch((err) => {console.log(err)})
+    }
+
     return (
-        <div className="flex flex-col mx-4 py-6 border-b-2 border-primary">
+        <div className="flex flex-col mx-4 py-6 border-b-2 border-primary" id={`cart-item-${itemIndex}`}>
             <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-x-4">
-                    <input  onChange={handleChangeTotal} type="checkbox" className="w-4 h-4 cart-item__input"/>
+                    <input  onChange={handleChangeTotal} type="checkbox" className="w-4 h-4 cart-item__input accent-[#4C7C7D]"/>
                     <div className="border border-primary bg-white rounded-xl">
                         <img src={urlImage} alt="" className="w-20 h-20 rounded-xl"/>
                     </div>
@@ -37,11 +73,11 @@ const ProductItem = (props) => {
                 <div className="flex">
                     <div className="grid grid-cols-3 gap-x-10  text-primary">
                         <span className="text-center font-semibold text-base">{formatCash(price * 1000)}</span>
-                        <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" quantity={quantity}/>
-                        <span className="text-center w-20 font-semibold text-base text-red--dark ">{formatCash(price * 1000 * quantity)}</span>
+                        <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" quantity={quantity} setItemQuantity={setItemQuantity}/>
+                        <span className="text-center w-20 font-semibold text-base text-red--dark ">{formatCash(price * 1000 * itemQuantity)}</span>
 
                     </div>
-                    <span className="text-primary text-sm font-semibold cursor-pointer underline ml-8">Xóa</span>
+                    <span onClick={handleDeleteCartItem} className="text-primary text-sm font-semibold cursor-pointer underline ml-8">Xóa</span>
                 </div>
 
 

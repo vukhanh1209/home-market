@@ -5,54 +5,6 @@ import Modal from '../../component/UI/Modal';
 import API from '../../api';
 import { formatCash } from '../../utils/utils';
 
-const cartItems = [
-    {
-        parentCate: 'Thịt, cá & trứng',
-        childCate: 'Thịt heo',
-        name: 'Thịt đùi heo',
-        weight: '200g',
-        oldPrice: 20000,
-        newPrice: 15000,
-        quantity: 1,
-    },
-    {
-        parentCate: 'Thịt, cá & trứng',
-        childCate: 'Thịt heo',
-        name: 'Thịt đùi heo',
-        weight: '200g',
-        oldPrice: 20000,
-        newPrice: 15000,
-        quantity: 1,
-    },
-    {
-        parentCate: 'Thịt, cá & trứng',
-        childCate: 'Thịt heo',
-        name: 'Thịt đùi heo',
-        weight: '200g',
-        oldPrice: 20000,
-        newPrice: 15000,
-        quantity: 1,
-    },
-    {
-        parentCate: 'Thịt, cá & trứng',
-        childCate: 'Thịt heo',
-        name: 'Thịt đùi heo',
-        weight: '200g',
-        oldPrice: 20000,
-        newPrice: 15000,
-        quantity: 1,
-    },
-    {
-        parentCate: 'Thịt, cá & trứng',
-        childCate: 'Thịt heo',
-        name: 'Thịt đùi heo',
-        weight: '200g',
-        oldPrice: 20000,
-        newPrice: 15000,
-        quantity: 1,
-    }
-]
-
 const CartPage = () => {
     const [total, setTotal] = useState(0)
     const [notification, setNotification] = useState(false)
@@ -107,7 +59,7 @@ const CartPage = () => {
                 if(res.data.success) {
                     setTimeout(() => {
                         navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
-                    }, 4000)
+                    }, 2000)
                 }
             })
             .catch(err => {
@@ -120,7 +72,6 @@ const CartPage = () => {
     }
 
 
-
     return (
         <div className="w-full h-fit bg-primary--dark px-24 py-28">
             <h1 className="text-3xl font-bold text-[#383634] py-5">Giỏ hàng</h1>
@@ -128,29 +79,34 @@ const CartPage = () => {
                 <div className="flex flex-col col-span-4 px-10  bg-primary rounded-3xl">
                     <div className="flex justify-between items-center w-full py-5 border-b-2 border-primary">
                         <div className="flex items-center">
-                            <input onChange={handleSeclectAll} type="checkbox" className="w-4 h-4 mr-3" id="SelectAll"/>
+                            <input onChange={handleSeclectAll} type="checkbox" className="w-4 h-4 mr-3 accent-[#4C7C7D]" id="SelectAll"/>
                             <label  htmlFor="SelectAll" className="text-sm font-medium text-primary">Tất cả</label>
                         </div>
-                        <button 
+                        {/* <button 
                             onClick={handleDeleteSelectedItem}
                             className="text-primary bg-transparent border-2 border-primary hover:bg-primary--dark rounded-xl font-semibold text-xs px-4 py-2.5 text-center">
                             Xóa các sản phẩm đã chọn
-                        </button>
+                        </button> */}
                     </div>
-                    <div id="CartItems">
+                    <div id="CartItems" className="h-full">
                         { cartItems.length > 0  ?
                             cartItems.map((item, index) => {
                                 return (
                                     <ProductItem 
                                         key={index} 
                                         data={item}
+                                        itemIndex={index}
                                         setTotal={setTotal}
+                                        setDisplaying={setDisplaying}
+                                        setState={setState}
+                                        setNotification={setNotification}
+
                                     />
                                 )
                                 
                             })
                             : (
-                                <span className="text-xl font-bold">Không có sản phẩm nào trong giỏ hàng</span>
+                                <div className="text-xl font-bold text-primary py-32 text-center w-full">Không có sản phẩm nào trong giỏ hàng</div>
                             )
                                 
                             

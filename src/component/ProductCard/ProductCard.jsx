@@ -6,11 +6,11 @@ import API from '../../api'
 import { AppContext } from '../../context/app.context'
 import { useContext } from 'react'
 
-const ProductCard = ({data}) => {
-    const [loved, setLoved] = useState(false);
+const ProductCard = (props) => {
+    // const [loved, setLoved] = useState(false);
+    const {data, setDisplaying, setState, setNotification} = props;
     const [quantity, setQuantity] = useState(0);
-    const {profile, setProfile} = useContext(AppContext);
-    console.log(data)
+    // const {profile, setProfile} = useContext(AppContext);
     const cartItem = {
         product_id: data.id,
         user_id: JSON.parse(localStorage.getItem('profile')).userID,
@@ -19,9 +19,14 @@ const ProductCard = ({data}) => {
     const handleAddToCart = () => {
         API.post('cart/add', cartItem)
             .then(res => {
-                console.log(res)
+                setState(res.data.success)
+                setNotification(res.data.message)
+                setDisplaying(true)
             })
             .catch(err => {
+                setState(false)
+                setNotification("Số lượng sản phẩm trong kho không đủ")
+                setDisplaying(true);
                 console.error(err)
             })
     }

@@ -40,7 +40,7 @@ const PlaceOrderPage = () => {
             setDisplaying(true)
             setTimeout(() => {
                 navigate('/cart')
-            }, 2500)
+            }, 2000)
         })
         .catch(err => {
             console.log(err)

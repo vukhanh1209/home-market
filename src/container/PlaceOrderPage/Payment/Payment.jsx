@@ -5,7 +5,7 @@ import Momo from '../../../component/UI/Momo';
 const Payment = (props) => {
     const {setPaymentMethod} = props
     const [isChanging, setIsChanging] = useState(false);
-    const [payment, setPayment] = useState('Thanh toán khi nhận hàng');
+    const [payment, setPayment] = useState('COD');
     const handleChangePayment = (event, paymentName) => {
         if(event.target.checked) {
             setPayment(paymentName);

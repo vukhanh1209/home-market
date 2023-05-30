@@ -12,10 +12,10 @@ const Modal = (props) => {
         document.getElementById("Modal").style.opacity = 1;
         setTimeout(() => {
             document.getElementById("Modal").style.opacity = 0;
-        }, 2000)
+        }, 1000)
         setTimeout(() => {
             setDisplaying(false)
-        }, 2300)
+        }, 1200)
 
     }
 
