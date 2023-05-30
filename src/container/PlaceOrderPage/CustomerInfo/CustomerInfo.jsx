@@ -1,16 +1,36 @@
-import {useState, useRef} from 'react'
-const info = {
-    firstName: 'Khánh',
-    lastName: 'Nguyễn',
-    phone: '0986354614',
-    address: '45D/25 D5, Bình Thạnh, Hồ Chí Minh'
-}
+import {useState, useRef, useEffect} from 'react'
+import API from '../../../api'
+// const info = {
+//     firstName: 'Khánh',
+//     lastName: 'Nguyễn',
+//     phone: '0986354614',
+//     address: '45D/25 D5, Bình Thạnh, Hồ Chí Minh'
+// }
 
-const CustomerInfo = () => {
-    const [lastName, setLastName] = useState(info.lastName)
-    const [firstName, setFirstName] = useState(info.firstName)
-    const [phone, setPhone] = useState(info.phone)
-    const [address, setAddress] = useState(info.address)
+const CustomerInfo = (props) => {
+    const [lastName, setLastName] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
+    const {setCustomerData} = props
+
+    useEffect(() => {
+        const profile = JSON.parse(localStorage.getItem('profile'));
+        setLastName(profile.lastName)
+        setFirstName(profile.firstName)
+        setPhone(profile.phoneNumber)
+        setAddress(profile.address)
+    }, [])
+
+    useEffect(() => {
+        const customerData = {
+            firstName,
+            lastName,
+            phone,
+            address
+        }
+        setCustomerData(customerData);
+    }, [lastName, firstName, phone, address])
 
 
     const [isEditing, setIsEditing] = useState(false);

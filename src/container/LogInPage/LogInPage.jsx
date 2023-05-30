@@ -52,9 +52,10 @@ const LogInPage = () => {
             setNotification(res.data.status)
             setDisplaying(true);
             handleLogIn(res.data.id);
-            setTimeout(() => {
-              navigate('/')
-            }, 2500)
+            console.log('Dang nhap')
+            // setTimeout(() => {
+            //   navigate('/')
+            // }, 5500)
           } 
           else {
             setState(false);

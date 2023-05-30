@@ -6,7 +6,7 @@ import { formatCash } from '../../../utils/utils';
 
 const ProductItem = (props) => {
     const { data, setTotal} = props;
-    const {itemName, weight, price, quantity} = data;
+    const {urlImage, categoryName, itemName, weight, price, quantity} = data;
     console.log(props)
 
     const handleChangeTotal = (event) => {
@@ -21,12 +21,12 @@ const ProductItem = (props) => {
                 <div className="flex items-center gap-x-4">
                     <input  onChange={handleChangeTotal} type="checkbox" className="w-4 h-4 cart-item__input"/>
                     <div className="border border-primary bg-white rounded-xl">
-                        <img src={product} alt="" className="w-20 h-20 rounded-xl"/>
+                        <img src={urlImage} alt="" className="w-20 h-20 rounded-xl"/>
                     </div>
                     <div className="flex flex-col">
-                        {/* <div className="text-xs font-bold text-gray-500 uppercase">
-                            <span >{cate}</span>
-                        </div> */}
+                        <div className="text-xs font-bold text-gray-500 uppercase">
+                            <span >{categoryName}</span>
+                        </div>
 
                         <h1 className="font-bold text-lg text-primary">{itemName}</h1>
                         <span className="text-xs font-semibold text-gray-400 ">{weight}</span>
