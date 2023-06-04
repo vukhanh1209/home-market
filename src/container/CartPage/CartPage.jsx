@@ -12,7 +12,7 @@ const CartPage = () => {
     const [displaying, setDisplaying] = useState(false);
     const [cartItems, setCartItems] = useState([])
     const navigate = useNavigate();
-
+    // Call API & Get all items when cart page is mounted
     useEffect(() => {
         API.get(`/cart/items?key=${JSON.parse(localStorage.getItem('profile')).userID}`)
             .then(res => {
@@ -23,25 +23,26 @@ const CartPage = () => {
                 console.log(err)
             })
     }, [])
-    let itemsData = [];
 
-    let selectedItemQuantity = 0;
-
-    const handleSeclectAll = () => {
+    // Handle clicking select all button
+    const handleSeclectAll = (event) => {
         const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
-        cartItemInput.forEach(item => {
-            if(!item.checked)  item.click()
-        });
+        if(event.target.checked) {
+            cartItemInput.forEach(item => {
+                if(!item.checked)  item.click()
+            });
+        }
+        else {
+            cartItemInput.forEach(item => {
+                if(item.checked)  item.click()
+            });
+        }
 
     }
-    const handleDeleteSelectedItem = () => {
-        
-    }
-
-
-
+    // Create an array & add all checked items to it
+    let itemsData = [];
+    let selectedItemQuantity = 0;
     if(document.getElementById("CartItems")) {
-
         const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
         cartItemInput.forEach((item, index) => {
             if(item.checked == true) {
@@ -51,7 +52,7 @@ const CartPage = () => {
             };
         });
     }
-    
+    // Handle clicking check out button
     const handleCheckout = () => {
         const selectedItems = [];
         const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input")
@@ -60,9 +61,7 @@ const CartPage = () => {
                 selectedItems.push(item.getAttribute('itemid'))
             };
         });
-
         const selectedItemsKey = selectedItems.join(',');
-        console.log('selectedItemsKey',selectedItemsKey)
 
         API.get(`cart/checkout?key=${selectedItemsKey}`)
             .then(res => {
@@ -79,11 +78,8 @@ const CartPage = () => {
             .catch(err => {
                 console.log(err)
             })
-        // setIsNotifying(true)
-        // setTimeout(() => {
-        //     navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
-        // }, 4000)
     }
+    console.log('total', total)
 
 
     return (
@@ -93,7 +89,7 @@ const CartPage = () => {
                 <div className="flex flex-col col-span-4 px-10  bg-primary rounded-3xl">
                     <div className="flex justify-between items-center w-full py-5 border-b-2 border-primary">
                         <div className="flex items-center">
-                            <input onChange={handleSeclectAll} type="checkbox" className="w-4 h-4 mr-3 accent-[#4C7C7D]" id="SelectAll"/>
+                            <input onChange={event => handleSeclectAll(event)} type="checkbox" className="w-4 h-4 mr-3 accent-[#4C7C7D]" id="SelectAll"/>
                             <label  htmlFor="SelectAll" className="text-sm font-medium text-primary">Tất cả</label>
                         </div>
                         {/* <button 

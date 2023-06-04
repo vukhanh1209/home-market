@@ -5,6 +5,7 @@ import { formatCash } from '../../../utils/utils';
 const MyOrder = () => {
     const profile = JSON.parse(localStorage.getItem('profile'));
     const [orderList, setOrderList] = useState([]);
+    // Call get order of user API 
     useEffect(() => {
         API.get(`user/getuser?key=${profile.userID}`)
         .then(res => {

@@ -33,6 +33,7 @@ const SignUpPage = () => {
     if(email !==  "" && password !== "" && phoneNumber !== "" && firstName !== "" && lastName !== "" && confirmPassword !== "" && address !== "") return true;
     return false;
   }
+  // Handle clicking submit button
   const handleSubmit = (e) => {
     e.preventDefault();
     if(checkFilledInAllInput() && isValidEmail(email) && isValidPhoneNumber(phoneNumber) && isValidPassword(password) && checkConfirmPassword(password, confirmPassword)) {
@@ -213,9 +214,9 @@ const SignUpPage = () => {
                     </div>
                     <div className="w-full flex flex-col md:items-center gap-y-2">
                       <button onClick={event => handleSubmit(event)} className="w-full md:w-80 text-white bg-green--dark hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Đăng ký</button>
-                      <p className="text-sm font-light text-gray-500 ">
+                      {/* <p className="text-sm font-light text-gray-500 ">
                           Bạn đã có tài khoản? <Link to="login" className="font-medium text-primary-600 hover:underline ">Đăng nhập tại đây</Link>
-                      </p>
+                      </p> */}
                     </div>
                   </form>
               </div>

@@ -55,12 +55,12 @@ const SearchPage = () => {
         }
     }, [])
 
-
+    // Handle clicking delete all button
     const handleDeleteAllTags = () => {
         showAllProducts();
         setSelectedTag([])
     }
-
+    // Handle clicking selected tag
     const handleClickSelectedTag = (index) => {
 
         const currentSearch = new URLSearchParams(location.search);
@@ -80,7 +80,7 @@ const SearchPage = () => {
         setSelectedTag([...selectedTag]);
     }
 
-
+    // Call get all product API
     const showAllProducts = () => {
         navigate('/search')
         API.get('product/all')
@@ -91,7 +91,7 @@ const SearchPage = () => {
                 console.log(err)
             })
     }
-
+    // Call get product by category API
     const showProductsByCate = (newCate) => {
         navigate(`/search?cate=${newCate}`)
         API.get(`product/productByCategory?key=${newCate}`)

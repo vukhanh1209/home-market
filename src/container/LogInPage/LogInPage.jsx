@@ -27,28 +27,29 @@ const LogInPage = () => {
     if(email !==  "" && password !== "") return true;
     return false;
   }
+  // Handle clicking add item to cart
+  // const addItemToCart = (item) => {
+  //   API.post('cart/add', item)
+  //   .then(res => {
+  //     console.log(res)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
 
-  const addItemToCart = (item) => {
-    API.post('cart/add', item)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
+  //   })
+  // }
 
-    })
-  }
-
-  const addSessionToCart = (id) => {
-    const cartItems = getCustomerCartFromSesstionStorage();
-    cartItems.forEach(item => {
-      const itemAddedUserID = {
-        ...item,
-        user_id: id
-      }
-      addItemToCart(itemAddedUserID)
-    })
-  }
+  // const addSessionToCart = (id) => {
+  //   const cartItems = getCustomerCartFromSesstionStorage();
+  //   cartItems.forEach(item => {
+  //     const itemAddedUserID = {
+  //       ...item,
+  //       user_id: id
+  //     }
+  //     addItemToCart(itemAddedUserID)
+  //   })
+  // }
+  // 
 
   const handleLogIn = (id) => {
     API.get(`user/getuser?key=${id}`)
@@ -57,18 +58,16 @@ const LogInPage = () => {
         setProfile(profile);
         setProfileToLocalStorage(profile)
         setIsVerified(true);
-        setTimeout(() => {
-          addSessionToCart(id)
-          clearSessionStorage();
-        }, 1000)
+        // setTimeout(() => {
+        //   addSessionToCart(id)
+        //   clearSessionStorage();
+        // }, 1000)
       })
       .catch(err => {
         console.log(err)
-      })
-    
-    
-}
-
+      })  
+  }
+  // Handle clicking submit button
   const handleSubmit = (e) => {
     e.preventDefault();
     if(checkFilledInAllInput() && isValidEmail(email) && isValidPassword(password)) {
@@ -91,7 +90,6 @@ const LogInPage = () => {
         })
     }
     setSubmit(true);
-
   }
 
 
