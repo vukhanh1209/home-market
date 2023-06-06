@@ -1,5 +1,5 @@
 # FRESH FOOD E-COMMERCE WEBSITE
-## Feature:
+## Use Case:
 **Customer:**
 - Search Product
 - Sign Up
@@ -19,3 +19,5 @@
 **Back-end: Java, Spring Boot**
 
 **Database: MySQL**
+
+*Git BE: https://github.com/vukhanh1209/home-market-BE*
