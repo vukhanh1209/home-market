@@ -32,20 +32,13 @@ const ProductItem = (props) => {
         }
         const inputElement = document.getElementById(`cart-item-${itemIndex}`).querySelector('input');
         console.log(inputElement)
-        // inputElement.click();
-        inputElement.click();
     }, [itemQuantity])
     // Handle clicking the input of cart item
     const handleClickCartItem = (event) => {
-        // console.log(event)
-        
         if(event.target.checked) {
-            console.log('itemQuantity', itemQuantity)
-
             setTotal(prev => prev += price * 1000 * itemQuantity)
         }
         else {
-            console.log('itemQuantity', itemQuantity)
             setTotal(prev => prev -= price  * 1000* itemQuantity)
         } 
     }
@@ -67,10 +60,10 @@ const ProductItem = (props) => {
     }
 
     return (
-        <div className="flex flex-col mx-4 py-6 border-b-2 border-primary cart-item" id={`cart-item-${itemIndex}`}>
+        <div className="flex flex-col mx-4 py-6 border-b-2 border-primary cart-item" id={`cart-item-${itemIndex}`} >
             <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-x-4">
-                    <input  onClick={handleClickCartItem} type="checkbox" itemID={cartItemid} className="w-4 h-4 cart-item__input accent-[#4C7C7D]"/>
+                    <input  onClick={handleClickCartItem} type="checkbox" quantity={itemQuantity} itemID={cartItemid} className="w-4 h-4 cart-item__input accent-[#4C7C7D]"/>
                     <div className="border border-primary bg-white rounded-xl">
                         <img src={urlImage} alt="" className="w-20 h-20 rounded-xl"/>
                     </div>
@@ -88,7 +81,7 @@ const ProductItem = (props) => {
                 <div className="flex">
                     <div className="grid grid-cols-3 gap-x-10  text-primary">
                         <span className="text-center font-semibold text-base">{formatCash(price * 1000)}</span>
-                        <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" quantity={quantity} setItemQuantity={setItemQuantity} setTotal={setTotal}/>
+                        <NumberInput width="32px" height="24px" color="#fff" borderRadius="4px" quantity={quantity} price={price} setItemQuantity={setItemQuantity} setTotal={setTotal}/>
                         <span className="text-center w-20 font-semibold text-base text-red--dark ">{formatCash(price * 1000 * quantity)}</span>
 
                     </div>

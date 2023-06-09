@@ -39,19 +39,9 @@ const CartPage = () => {
         }
 
     }
-    // Create an array & add all checked items to it
     let itemsData = [];
     let selectedItemQuantity = 0;
-    if(document.getElementById("CartItems")) {
-        const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
-        cartItemInput.forEach((item, index) => {
-            if(item.checked == true) {
-                selectedItemQuantity++
-                itemsData.push(cartItems[index])
 
-            };
-        });
-    }
     // Handle clicking check out button
     const handleCheckout = () => {
         const selectedItems = [];
@@ -62,6 +52,20 @@ const CartPage = () => {
             };
         });
         const selectedItemsKey = selectedItems.join(',');
+
+        // Create an array & add all checked items to it
+        if(document.getElementById("CartItems")) {
+            const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
+            cartItemInput.forEach((item, index) => {
+                if(item.checked) {
+                    selectedItemQuantity++
+                    let placeOrderItem = cartItems[index];
+                    placeOrderItem.quantity = Number(item.getAttribute('quantity'))
+                    itemsData.push(placeOrderItem)
+
+                };
+            });
+        }
 
         API.get(`cart/checkout?key=${selectedItemsKey}`)
             .then(res => {
@@ -79,8 +83,6 @@ const CartPage = () => {
                 console.log(err)
             })
     }
-    console.log('total', total)
-
 
     return (
         <div className="w-full h-fit bg-primary--dark px-24 py-28">

@@ -1,21 +1,36 @@
-import {Fragment, useState, useCallback} from 'react'
+import {Fragment, useState, useCallback, useEffect} from 'react'
 import {RiSubtractFill, RiAddFill} from 'react-icons/ri'
 import { debounce } from 'lodash'
 
 const NumberInput = (props) => {
-    const {width, height, color, border, borderRadius, quantity, setItemQuantity, setTotal} = props
+    const {width, height, color, border, borderRadius, quantity, price, setItemQuantity, setTotal} = props
     const [value,setValue] = useState(quantity || 0);
+
+    const updateTotal = (event, action) => {
+        if(event.target.closest('.cart-item').querySelector('input').checked) {
+            switch(action) {
+                case "add": 
+                    setTotal(prev => prev += price * 1000)
+                    break;
+                case "sub": 
+                    setTotal(prev => prev -= price * 1000)
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     // Use debounce to avoid user calling API continuously
     const handleAddQuantity = debounce((event) => {
+        updateTotal(event, "add")
         setValue(prev => prev + 1)
-        event.target.closest('.cart-item').querySelector('input').click();
         setItemQuantity(value + 1)
     }, 500)
 
     const handleSubQuantity = debounce((event) => {
+        updateTotal(event, "sub")
         setValue(prev => prev - 1)
-        event.target.closest('.cart-item').querySelector('input').click();
         setItemQuantity(value - 1)
     }, 500)
 
