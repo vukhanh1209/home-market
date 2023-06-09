@@ -11,7 +11,9 @@ const CartPage = () => {
     const [state, setState] = useState();
     const [displaying, setDisplaying] = useState(false);
     const [cartItems, setCartItems] = useState([])
+    const [placeOrderItemQuantity, setPlaceOrderItemQuantity] = useState(0)
     const navigate = useNavigate();
+
     // Call API & Get all items when cart page is mounted
     useEffect(() => {
         API.get(`/cart/items?key=${JSON.parse(localStorage.getItem('profile')).userID}`)
@@ -23,6 +25,19 @@ const CartPage = () => {
                 console.log(err)
             })
     }, [])
+
+    useEffect(() => {
+        if(document.getElementById("CartItems")) {
+            let selectedItemQuantity = 0;
+            const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
+            cartItemInput.forEach((item) => {
+                if(item.checked) {
+                    selectedItemQuantity++;
+                }
+            })
+            setPlaceOrderItemQuantity(selectedItemQuantity)
+        }
+    }, [total])
 
     // Handle clicking select all button
     const handleSeclectAll = (event) => {
@@ -39,12 +54,10 @@ const CartPage = () => {
         }
 
     }
-    let itemsData = [];
-    let selectedItemQuantity = 0;
-
     // Handle clicking check out button
     const handleCheckout = () => {
         const selectedItems = [];
+        let itemsData = [];
         const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input")
         cartItemInput.forEach((item) => {
             if(item.checked) {
@@ -58,13 +71,13 @@ const CartPage = () => {
             const cartItemInput = document.getElementById("CartItems").querySelectorAll(".cart-item__input");
             cartItemInput.forEach((item, index) => {
                 if(item.checked) {
-                    selectedItemQuantity++
                     let placeOrderItem = cartItems[index];
                     placeOrderItem.quantity = Number(item.getAttribute('quantity'))
                     itemsData.push(placeOrderItem)
 
                 };
             });
+
         }
 
         API.get(`cart/checkout?key=${selectedItemsKey}`)
@@ -75,7 +88,7 @@ const CartPage = () => {
                 setDisplaying(true)
                 if(res.data.success) {
                     setTimeout(() => {
-                        navigate("/place-order", { state: { itemsData, totalQuantity: selectedItemQuantity,  totalPrice: total} })
+                        navigate("/place-order", { state: { itemsData, totalQuantity: placeOrderItemQuantity,  totalPrice: total} })
                     }, 2000)
                 }
             })
@@ -127,7 +140,7 @@ const CartPage = () => {
                     </div>
                 </div>
                 <div className="sticky top-[100px] flex flex-col gap-y-3 col-span-1 bg-primary rounded-3xl text-primary p-5 h-fit">
-                    <span className="text-xs font-medium ">{`Tổng cộng ${selectedItemQuantity} sản phẩm`}</span>
+                    <span className="text-xs font-medium ">{`Tổng cộng ${placeOrderItemQuantity} sản phẩm`}</span>
                     <span className="text-xl font-bold">{formatCash(total)}</span>
                     <button className="flex">
                         <button 
